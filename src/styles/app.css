@@ -1,0 +1,47 @@
+@import "tailwindcss";
+
+@import "./theme.css";
+@import "./utilities.css";
+
+@font-face {
+    font-family: "display";
+    src: url("/fonts/Newsreader-VariableFont_opsz,wght.ttf") format("truetype");
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "body";
+    src: url("/fonts/Inter-VariableFont_opsz,wght.ttf") format("truetype");
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+@theme {
+    --spacing-em: 1em;
+
+    /* Layout */
+    --navbar-height: 64px;
+
+    /* Font Families */
+    --font-display: "display", serif;
+    --font-body: "body", sans-serif;
+}
+
+@layer base {
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+  }
+}

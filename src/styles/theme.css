@@ -1,0 +1,19 @@
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+@custom-variant light (&:where([data-theme="light"], [data-theme="light"] *));
+
+@theme {
+  --color-*: initial;
+
+  --color-background: #0a0b0c;
+  --color-foreground: oklch(1 0 0);
+}
+
+[data-theme="dark"] {
+  --color-background: oklch(0.15 0.01 280);
+  --color-foreground: oklch(0.95 0.005 90);
+}
+
+[data-theme="light"] {
+  --color-background: oklch(0.98 0.004 80);
+  --color-foreground: oklch(0.2 0.01 280);
+}

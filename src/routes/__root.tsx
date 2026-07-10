@@ -2,7 +2,18 @@ import { HeadContent, Scripts, createRootRoute } from '@tanstack/react-router'
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 import { TanStackDevtools } from '@tanstack/react-devtools'
 
-import appCss from '../styles.css?url'
+import appCss from '../styles/app.css?url'
+import { NavBar } from '@/components/globals/navbar'
+
+const themeInitScript = `
+(function () {
+  var stored = localStorage.getItem('theme')
+  var theme = stored === 'dark' || stored === 'light'
+    ? stored
+    : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+  document.documentElement.dataset.theme = theme
+})()
+`
 
 export const Route = createRootRoute({
   head: () => ({
@@ -15,7 +26,7 @@ export const Route = createRootRoute({
         content: 'width=device-width, initial-scale=1',
       },
       {
-        title: 'TanStack Start Starter',
+        title: 'Letter',
       },
     ],
     links: [
@@ -24,17 +35,23 @@ export const Route = createRootRoute({
         href: appCss,
       },
     ],
+    scripts: [
+      {
+        children: themeInitScript,
+      },
+    ],
   }),
   shellComponent: RootDocument,
 })
 
 function RootDocument({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" data-theme="light">
       <head>
         <HeadContent />
       </head>
       <body>
+        <NavBar />
         {children}
         <TanStackDevtools
           config={{
