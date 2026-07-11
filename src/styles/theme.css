@@ -2,18 +2,33 @@
 @custom-variant light (&:where([data-theme="light"], [data-theme="light"] *));
 
 @theme {
-  --color-*: initial;
+	--color-*: initial;
 
-  --color-background: #0a0b0c;
-  --color-foreground: oklch(1 0 0);
+	--color-background: oklch(0.98 0.004 80);
+	--color-foreground: oklch(0.2 0.01 280);
+	--color-primary: oklch(0.22 0.02 280);
+	--color-primary-foreground: oklch(0.98 0.004 80);
+	--color-accent: oklch(0.92 0.02 50);
+	--color-accent-foreground: oklch(0.25 0.02 50);
+	--color-border: oklch(0.88 0.01 80);
+	--color-input: oklch(0.9 0.01 80);
+	--color-muted-foreground: oklch(0.55 0.03 280);
+	--color-destructive: oklch(0.577 0.245 27.325);
+
+	--color-ring: oklch(0.55 0.03 280);
 }
 
 [data-theme="dark"] {
-  --color-background: oklch(0.15 0.01 280);
-  --color-foreground: oklch(0.95 0.005 90);
-}
+	--color-background: oklch(0.15 0.01 280);
+	--color-foreground: oklch(0.95 0.005 90);
+	--color-primary: oklch(0.95 0.005 90);
+	--color-primary-foreground: oklch(0.15 0.01 280);
+	--color-accent: oklch(0.3 0.03 50);
+	--color-accent-foreground: oklch(0.95 0.005 90);
+	--color-border: oklch(1 0 0 / 12%);
+	--color-input: oklch(1 0 0 / 15%);
+	--color-muted-foreground: oklch(0.7 0.02 280);
+	--color-destructive: oklch(0.704 0.191 22.216);
 
-[data-theme="light"] {
-  --color-background: oklch(0.98 0.004 80);
-  --color-foreground: oklch(0.2 0.01 280);
+	--color-ring: oklch(0.7 0.02 280);
 }
