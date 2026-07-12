@@ -1,4 +1,5 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -8,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { ContinueWithGoogle } from "#/components/continue-with-google";
 import { Link } from "@tanstack/react-router";
-import { toast } from "@/components/ui/toaster";
+import { toast } from "sonner";
 
 const signupSchema = z.object({
 	name: z.string().min(1, "Name is required"),
@@ -24,6 +25,7 @@ export const Route = createFileRoute("/signup")({
 
 function RouteComponent() {
 	const navigate = useNavigate();
+	const queryClient = useQueryClient();
 	const {
 		register,
 		handleSubmit,
@@ -41,18 +43,15 @@ function RouteComponent() {
 			},
 			{
 				onSuccess: () => {
-					toast({
-						title: "Account created",
+					toast.success("Account created", {
 						description: "Welcome to Letter.",
-						variant: "positive",
 					});
+					queryClient.invalidateQueries({ queryKey: ["session"] });
 					navigate({ to: "/dashboard" });
 				},
 				onError: (ctx) => {
-					toast({
-						title: "Error",
+					toast.error("Error", {
 						description: ctx.error.message,
-						variant: "negative",
 					});
 				},
 			},

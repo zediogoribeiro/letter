@@ -1,8 +1,13 @@
 import { Link } from "@tanstack/react-router";
+import { useQuery } from "@tanstack/react-query";
 import { Button } from "../ui/button";
 import { PencilSimpleLineIcon } from "@phosphor-icons/react";
+import { UserMenu } from "../user-menu";
+import { sessionQueryOptions } from "@/lib/middleware";
 
 export function NavBar() {
+	const { data: session, isPending } = useQuery(sessionQueryOptions());
+
 	return (
 		<header className="h-(--navbar-height) sm:px-6 lg:px-8 sticky top-0 w-full border-b border-border">
 			<div className="flex justify-between items-center h-full">
@@ -19,19 +24,31 @@ export function NavBar() {
 					</nav>
 				</div>
 				<div className="flex items-center gap-2">
-					<Button size="xs" variant="secondary" className="flex gap-1 group">
-						<PencilSimpleLineIcon
-							size={16}
-							className="transform duration-300 group-hover:-rotate-12"
-						/>
-						<span>Write</span>
-					</Button>
-					<Button asChild size="xs" variant="secondary">
-						<Link to="/login">Sign in</Link>
-					</Button>
-					<Button asChild size="xs">
-						<Link to="/signup">Get Started</Link>
-					</Button>
+					{isPending ? null : session ? (
+						<>
+							<Button
+								size="xs"
+								variant="secondary"
+								className="flex gap-1 group"
+							>
+								<PencilSimpleLineIcon
+									size={16}
+									className="transform duration-300 group-hover:-rotate-12"
+								/>
+								<span>Write</span>
+							</Button>
+							<UserMenu />
+						</>
+					) : (
+						<>
+							<Button asChild size="xs" variant="secondary">
+								<Link to="/login">Sign in</Link>
+							</Button>
+							<Button asChild size="xs">
+								<Link to="/signup">Get Started</Link>
+							</Button>
+						</>
+					)}
 				</div>
 			</div>
 		</header>

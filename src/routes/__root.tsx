@@ -1,10 +1,17 @@
-import { HeadContent, Scripts, createRootRoute } from "@tanstack/react-router";
+import {
+	HeadContent,
+	Scripts,
+	createRootRouteWithContext,
+} from "@tanstack/react-router";
+import type { QueryClient } from "@tanstack/react-query";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import { TanStackDevtools } from "@tanstack/react-devtools";
-import { Toaster } from "@/components/ui/toaster";
+import { Toaster } from "sonner";
 
 import appCss from "../styles/app.css?url";
 import { NavBar } from "@/components/globals/navbar";
+import { useTheme } from "@/hooks/use-theme";
+import { sessionQueryOptions } from "@/lib/middleware";
 
 const themeInitScript = `
 (function () {
@@ -16,7 +23,15 @@ const themeInitScript = `
 })()
 `;
 
-export const Route = createRootRoute({
+export const Route = createRootRouteWithContext<{
+	queryClient: QueryClient;
+}>()({
+	beforeLoad: async ({ context }) => {
+		const session = await context.queryClient.ensureQueryData(
+			sessionQueryOptions(),
+		);
+		return { session };
+	},
 	head: () => ({
 		meta: [
 			{
@@ -46,6 +61,8 @@ export const Route = createRootRoute({
 });
 
 function RootDocument({ children }: { children: React.ReactNode }) {
+	const { theme } = useTheme();
+
 	return (
 		<html lang="en" data-theme="light" suppressHydrationWarning>
 			<head>
@@ -65,7 +82,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 						},
 					]}
 				/>
-				<Toaster />
+				<Toaster theme={theme} richColors />
 				<Scripts />
 			</body>
 		</html>

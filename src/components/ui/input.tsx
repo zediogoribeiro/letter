@@ -1,7 +1,4 @@
 import type { VariantProps } from "cva";
-import { createContext, use, useRef } from "react";
-import { Slot } from "@/components/ui/slot";
-import { composeRefs } from "@/lib/utils/compose-refs";
 import { cn, cva } from "@/lib/utils/classnames";
 
 const inputStyle = cva({

@@ -52,3 +52,12 @@
 		letter-spacing: -0.02em;
 	}
 }
+
+/*
+ * Unlayered on purpose: Sonner injects its own <style> tag at runtime with
+ * no cascade layer, and unlayered rules always beat layered ones regardless
+ * of specificity. This has to stay outside @layer base to actually win.
+ */
+body [data-sonner-toaster] {
+	font-family: var(--font-body);
+}
