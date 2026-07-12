@@ -20,12 +20,10 @@ function UserMenu() {
 
 	return (
 		<DropdownMenu>
-			<DropdownMenu.Trigger asChild>
-				<button type="button">
-					<Avatar size="sm">
-						<Avatar.Fallback>{session.user.name}</Avatar.Fallback>
-					</Avatar>
-				</button>
+			<DropdownMenu.Trigger asChild className="cursor-pointer ml-2">
+				<Avatar size="sm">
+					<Avatar.Fallback>{session.user.name}</Avatar.Fallback>
+				</Avatar>
 			</DropdownMenu.Trigger>
 
 			<DropdownMenu.Content align="end">

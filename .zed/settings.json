@@ -19,5 +19,14 @@
     "CSS": {
       "formatter": { "language_server": { "name": "biome" } }
     }
+  },
+  "lsp": {
+    "vscode-css-language-server": {
+      "settings": {
+        "css": { "lint": { "unknownAtRules": "ignore" } },
+        "scss": { "lint": { "unknownAtRules": "ignore" } },
+        "less": { "lint": { "unknownAtRules": "ignore" } }
+      }
+    }
   }
 }

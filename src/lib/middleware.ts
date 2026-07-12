@@ -13,4 +13,5 @@ export const sessionQueryOptions = () =>
 	queryOptions({
 		queryKey: ["session"],
 		queryFn: () => getSessionFn(),
+		staleTime: 5 * 60 * 1000,
 	});

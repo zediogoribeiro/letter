@@ -1,15 +1,14 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useQueryClient } from "@tanstack/react-query";
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { authClient } from "@/lib/auth-client";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import { Link } from "@tanstack/react-router";
-import { ContinueWithGoogle } from "#/components/continue-with-google";
+import { useQueryClient } from "@tanstack/react-query";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { useForm } from "react-hook-form";
 import { toast } from "sonner";
+import { z } from "zod";
+import { ContinueWithGoogle } from "#/components/continue-with-google";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { authClient } from "@/lib/auth-client";
 
 const loginSchema = z.object({
 	email: z.email("Enter a valid email"),
@@ -76,7 +75,9 @@ function RouteComponent() {
 							{...register("email")}
 						/>
 						{errors.email && (
-							<p className="text-sm text-red-500">{errors.email.message}</p>
+							<p className="text-sm font-medium text-destructive/70">
+								{errors.email.message}
+							</p>
 						)}
 					</div>
 					<div className="space-y-2">
@@ -88,7 +89,9 @@ function RouteComponent() {
 							{...register("password")}
 						/>
 						{errors.password && (
-							<p className="text-sm text-red-500">{errors.password.message}</p>
+							<p className="text-sm font-medium text-destructive/70">
+								{errors.password.message}
+							</p>
 						)}
 					</div>
 					<Button

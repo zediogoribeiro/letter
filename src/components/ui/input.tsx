@@ -10,13 +10,17 @@ const inputStyle = cva({
 		"flex items-center",
 		"disabled:cursor-not-allowed disabled:opacity-50",
 		"focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring",
+		"autofill:shadow-[inset_0_0_0_1000px_var(--color-background)]",
+		"autofill:[-webkit-text-fill-color:var(--color-foreground)]",
 	],
 	variants: {
 		variant: {
-			primary: "bg-transparent text-base border border-input shadow-sm",
+			primary:
+				"bg-transparent text-base border border-input shadow-sm autofill:border-input",
 		},
 		size: {
 			md: "h-9 rounded-md px-3 py-1 text-sm",
+			lg: "h-12 rounded-md px-3 py-1 text-lg",
 		},
 	},
 	defaultVariants: {
@@ -49,4 +53,4 @@ const Input = ({
 	);
 };
 
-export { Input };
+export { inputStyle, Input };

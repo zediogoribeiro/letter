@@ -7,7 +7,6 @@ const buttonStyle = cva({
 	base: [
 		"relative inline-flex h-(--button-height) shrink-0 items-center justify-center",
 		"transition duration-200 enabled:cursor-pointer disabled:opacity-40",
-		"active:scale-98",
 		"focus-visible:ring-(length:--ring-width) ring-ring focus-visible:outline-none",
 	],
 	variants: {
@@ -18,16 +17,23 @@ const buttonStyle = cva({
 				"hover:bg-accent hover:text-accent-foreground [--button-text-color:var(--color-foreground)]",
 			outline:
 				"border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground [--button-text-color:var(--color-foreground)]",
+			ghost:
+				"hover:bg-accent hover:text-accent-foreground active:bg-accent/90 [--button-text-color:var(--color-foreground)]",
 		},
 		size: {
 			xs: "rounded-md px-3 text-xs [--button-height:--spacing(8)]",
 			sm: "rounded-md px-4 text-sm",
 			md: "rounded-md px-4 text-base [--button-height:--spacing(10)]",
 		},
+		active: {
+			true: "bg-accent text-accent-foreground border-accent",
+			false: "",
+		},
 	},
 	defaultVariants: {
 		variant: "primary",
 		size: "md",
+		active: false,
 	},
 });
 
@@ -45,6 +51,7 @@ const CompoundButton = ({
 	asChild = false,
 	isLoading,
 	size = "md",
+	active,
 	type = "button",
 	ref,
 	...props
@@ -58,6 +65,7 @@ const CompoundButton = ({
 					className,
 					variant,
 					size,
+					active,
 				}),
 				isLoading && "text-transparent transition-none",
 			)}

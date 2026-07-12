@@ -1,12 +1,14 @@
-import { Link } from "@tanstack/react-router";
+import { Link, redirect } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { Button } from "../ui/button";
-import { PencilSimpleLineIcon } from "@phosphor-icons/react";
+import { Button, IconButton } from "../ui/button";
+import { PencilSimpleLineIcon, SunIcon, MoonIcon } from "@phosphor-icons/react";
 import { UserMenu } from "../user-menu";
 import { sessionQueryOptions } from "@/lib/middleware";
+import { useTheme } from "@/hooks/use-theme";
 
 export function NavBar() {
 	const { data: session, isPending } = useQuery(sessionQueryOptions());
+	const { theme, toggleTheme } = useTheme();
 
 	return (
 		<header className="h-(--navbar-height) sm:px-6 lg:px-8 sticky top-0 w-full border-b border-border">
@@ -23,19 +25,32 @@ export function NavBar() {
 						<span>Culture</span>
 					</nav>
 				</div>
-				<div className="flex items-center gap-2">
+				<div className="flex items-center">
+					<IconButton
+						size="xs"
+						variant="secondary"
+						aria-label={
+							theme === "dark" ? "Switch to light mode" : "Switch to dark mode"
+						}
+						onClick={toggleTheme}
+					>
+						{theme === "dark" ? <SunIcon size={16} /> : <MoonIcon size={16} />}
+					</IconButton>
 					{isPending ? null : session ? (
 						<>
 							<Button
 								size="xs"
 								variant="secondary"
 								className="flex gap-1 group"
+								asChild
 							>
-								<PencilSimpleLineIcon
-									size={16}
-									className="transform duration-300 group-hover:-rotate-12"
-								/>
-								<span>Write</span>
+								<Link to="/article-editor">
+									<PencilSimpleLineIcon
+										size={16}
+										className="transform duration-300 group-hover:-rotate-12"
+									/>
+									<span>Write</span>
+								</Link>
 							</Button>
 							<UserMenu />
 						</>

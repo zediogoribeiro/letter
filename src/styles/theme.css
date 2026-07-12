@@ -14,9 +14,13 @@
 	--color-input: oklch(0.9 0.01 80);
 	--color-muted-foreground: oklch(0.55 0.03 280);
 	--color-destructive: oklch(0.577 0.245 27.325);
+	--color-destructive-foreground: oklch(0.984 0.003 247.858);
+	--color-secondary: oklch(0.95 0.008 80);
+	--color-secondary-foreground: oklch(0.25 0.015 280);
 	--color-muted: oklch(0.94 0.006 80);
 	--color-popover: oklch(1 0 0);
 	--color-popover-foreground: oklch(0.2 0.01 280);
+	--color-card: oklch(1 0 0);
 
 	--color-ring: oklch(0.55 0.03 280);
 }
@@ -29,12 +33,16 @@
 	--color-accent: oklch(0.3 0.03 50);
 	--color-accent-foreground: oklch(0.95 0.005 90);
 	--color-border: oklch(1 0 0 / 12%);
-	--color-input: oklch(1 0 0 / 15%);
+	--color-input: oklch(1 0 0 / 22%);
 	--color-muted-foreground: oklch(0.7 0.02 280);
 	--color-destructive: oklch(0.704 0.191 22.216);
+	--color-destructive-foreground: oklch(0.984 0.003 247.858);
+	--color-secondary: oklch(0.25 0.02 280);
+	--color-secondary-foreground: oklch(0.95 0.005 90);
 	--color-muted: oklch(0.25 0.02 280);
 	--color-popover: oklch(0.18 0.015 280);
 	--color-popover-foreground: oklch(0.95 0.005 90);
+	--color-card: oklch(0.18 0.015 280);
 
 	--color-ring: oklch(0.7 0.02 280);
 }
