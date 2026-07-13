@@ -1,6 +1,6 @@
 import { queryOptions } from "@tanstack/react-query";
 import { createServerFn } from "@tanstack/react-start";
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import { z } from "zod";
 import { db } from "../../db/drizzle";
 import { articles, type JsonValue } from "../../db/schema";
@@ -114,6 +114,28 @@ export const articleBySlugQueryOptions = (slug: string) =>
 	queryOptions({
 		queryKey: ["articles", "slug", slug],
 		queryFn: () => getArticleBySlugFn({ data: { slug } }),
+	});
+
+const getPublicArticleBySlugSchema = z.object({ slug: z.string() });
+
+export const getPublicArticleBySlugFn = createServerFn({ method: "GET" })
+	.validator(getPublicArticleBySlugSchema)
+	.handler(async ({ data }) => {
+		const article = await db.query.articles.findFirst({
+			where: and(
+				eq(articles.slug, data.slug),
+				eq(articles.status, "published"),
+			),
+			with: { author: true },
+		});
+
+		return article ?? null;
+	});
+
+export const publicArticleBySlugQueryOptions = (slug: string) =>
+	queryOptions({
+		queryKey: ["articles", "public-slug", slug],
+		queryFn: () => getPublicArticleBySlugFn({ data: { slug } }),
 	});
 
 export const listArticlesFn = createServerFn({ method: "GET" }).handler(

@@ -5,7 +5,6 @@ import {
 	ParagraphIcon,
 	TextAlignCenterIcon,
 	TextAlignLeftIcon,
-	TextAlignRightIcon,
 	TextBIcon,
 	TextHOneIcon,
 	TextHThreeIcon,
@@ -32,7 +31,6 @@ export const MenuBar = ({ editor }: { editor: Editor }) => {
 				// Text alignment
 				isAlignLeft: ctx.editor.isActive({ textAlign: "left" }) ?? false,
 				isAlignCenter: ctx.editor.isActive({ textAlign: "center" }) ?? false,
-				isAlignRight: ctx.editor.isActive({ textAlign: "right" }) ?? false,
 				isAlignJustify: ctx.editor.isActive({ textAlign: "justify" }) ?? false,
 
 				// Block types
@@ -188,15 +186,6 @@ export const MenuBar = ({ editor }: { editor: Editor }) => {
 						active={editorState.isAlignCenter}
 					>
 						<TextAlignCenterIcon />
-					</IconButton>
-					<IconButton
-						aria-label="Align Right Button"
-						variant="ghost"
-						size="xs"
-						onClick={() => editor.chain().focus().setTextAlign("right").run()}
-						active={editorState.isAlignRight}
-					>
-						<TextAlignRightIcon />
 					</IconButton>
 				</div>
 			</div>

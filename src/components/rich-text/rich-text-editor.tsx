@@ -24,18 +24,19 @@ const RichTextEditor = ({ content, onChange }: RichTextEditorProps) => {
 			StarterKit.configure({
 				bulletList: {
 					HTMLAttributes: {
-						class: "list-disc ml-3",
+						class: "list-disc ml-10",
 					},
 				},
 				orderedList: {
 					HTMLAttributes: {
-						class: "list-decimal ml-3",
+						class: "list-decimal ml-10",
 					},
 				},
 			}),
 			Highlight,
 			TextAlign.configure({
-				types: ["heading", "paragraph"],
+				types: ["heading", "paragraph", "listItem"],
+				alignments: ["left", "center"],
 			}),
 		],
 		editorProps: {

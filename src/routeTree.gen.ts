@@ -17,6 +17,7 @@ import { Route as ArticleEditorRouteImport } from './routes/article-editor'
 import { Route as CategoryRouteImport } from './routes/$category'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ArticleEditorIndexRouteImport } from './routes/article-editor.index'
+import { Route as ArticlesArticleIdRouteImport } from './routes/articles/$articleId'
 import { Route as ArticleEditorSlugRouteImport } from './routes/article-editor.$slug'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 
@@ -60,6 +61,11 @@ const ArticleEditorIndexRoute = ArticleEditorIndexRouteImport.update({
   path: '/',
   getParentRoute: () => ArticleEditorRoute,
 } as any)
+const ArticlesArticleIdRoute = ArticlesArticleIdRouteImport.update({
+  id: '/articles/$articleId',
+  path: '/articles/$articleId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ArticleEditorSlugRoute = ArticleEditorSlugRouteImport.update({
   id: '/$slug',
   path: '/$slug',
@@ -80,6 +86,7 @@ export interface FileRoutesByFullPath {
   '/signup': typeof SignupRoute
   '/unauthorized': typeof UnauthorizedRoute
   '/article-editor/$slug': typeof ArticleEditorSlugRoute
+  '/articles/$articleId': typeof ArticlesArticleIdRoute
   '/article-editor/': typeof ArticleEditorIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
@@ -91,6 +98,7 @@ export interface FileRoutesByTo {
   '/signup': typeof SignupRoute
   '/unauthorized': typeof UnauthorizedRoute
   '/article-editor/$slug': typeof ArticleEditorSlugRoute
+  '/articles/$articleId': typeof ArticlesArticleIdRoute
   '/article-editor': typeof ArticleEditorIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
@@ -104,6 +112,7 @@ export interface FileRoutesById {
   '/signup': typeof SignupRoute
   '/unauthorized': typeof UnauthorizedRoute
   '/article-editor/$slug': typeof ArticleEditorSlugRoute
+  '/articles/$articleId': typeof ArticlesArticleIdRoute
   '/article-editor/': typeof ArticleEditorIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
@@ -118,6 +127,7 @@ export interface FileRouteTypes {
     | '/signup'
     | '/unauthorized'
     | '/article-editor/$slug'
+    | '/articles/$articleId'
     | '/article-editor/'
     | '/api/auth/$'
   fileRoutesByTo: FileRoutesByTo
@@ -129,6 +139,7 @@ export interface FileRouteTypes {
     | '/signup'
     | '/unauthorized'
     | '/article-editor/$slug'
+    | '/articles/$articleId'
     | '/article-editor'
     | '/api/auth/$'
   id:
@@ -141,6 +152,7 @@ export interface FileRouteTypes {
     | '/signup'
     | '/unauthorized'
     | '/article-editor/$slug'
+    | '/articles/$articleId'
     | '/article-editor/'
     | '/api/auth/$'
   fileRoutesById: FileRoutesById
@@ -153,6 +165,7 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   SignupRoute: typeof SignupRoute
   UnauthorizedRoute: typeof UnauthorizedRoute
+  ArticlesArticleIdRoute: typeof ArticlesArticleIdRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
 }
 
@@ -214,6 +227,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ArticleEditorIndexRouteImport
       parentRoute: typeof ArticleEditorRoute
     }
+    '/articles/$articleId': {
+      id: '/articles/$articleId'
+      path: '/articles/$articleId'
+      fullPath: '/articles/$articleId'
+      preLoaderRoute: typeof ArticlesArticleIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/article-editor/$slug': {
       id: '/article-editor/$slug'
       path: '/$slug'
@@ -253,6 +273,7 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   SignupRoute: SignupRoute,
   UnauthorizedRoute: UnauthorizedRoute,
+  ArticlesArticleIdRoute: ArticlesArticleIdRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
 }
 export const routeTree = rootRouteImport

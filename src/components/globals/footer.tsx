@@ -8,7 +8,7 @@ export const Footer = () => {
 				<div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-center  ">
 					<div className="flex flex-col gap-2">
 						<Link to="/" className="editorial-heading text-2xl">
-							Sword
+							Letter
 						</Link>
 						<p className="max-w-sm text-sm text-muted-foreground">
 							A quiet space for thought-provoking stories and ideas worth
@@ -19,7 +19,7 @@ export const Footer = () => {
 				<Divider className="my-4 " />
 				<div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
 					<p className="text-sm text-muted-foreground">
-						© {new Date().getFullYear()} Sword News. All rights reserved.
+						© {new Date().getFullYear()} Letter News. All rights reserved.
 					</p>
 					<p className="text-sm text-muted-foreground">
 						Crafted with care for readers who think slowly.

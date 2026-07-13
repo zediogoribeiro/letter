@@ -5,6 +5,107 @@
 	line-height: 1.05;
 }
 
+@utility article-content {
+	font-size: 1.125rem;
+	line-height: 1.1;
+
+	& > :first-child {
+		margin-top: 0;
+	}
+
+	& :where(h1, h2, h3, h4, h5, h6) {
+		margin-top: 1.25em;
+		margin-bottom: 0.5em;
+	}
+
+	& :where(h4, h5, h6) {
+		font-weight: 600;
+	}
+
+	& :where(h4) {
+		font-size: 1.125rem;
+	}
+
+	& :where(h5) {
+		font-size: 1rem;
+	}
+
+	& :where(h6) {
+		font-size: 0.875rem;
+	}
+
+	& :where(p) {
+		margin-top: 1em;
+		margin-bottom: 1em;
+	}
+
+	& :where(ul, ol) {
+		margin-top: 1.375em;
+		margin-bottom: 1.375em;
+		margin-left: 1.75em;
+		list-style-position: inside;
+	}
+
+	& :where(li) {
+		margin-top: 0.25em;
+		margin-bottom: 0.25em;
+	}
+
+	& :where(blockquote) {
+		margin-top: 1em;
+		margin-bottom: 1em;
+		padding-left: 1.25em;
+		border-left: 2px solid var(--color-border);
+		font-style: italic;
+		color: var(--color-muted-foreground);
+	}
+
+	& :where(a) {
+		color: var(--color-foreground);
+		text-decoration: underline;
+		text-decoration-color: var(--color-border);
+		text-underline-offset: 2px;
+
+		&:hover {
+			text-decoration-color: currentColor;
+		}
+	}
+
+	& :where(code) {
+		background-color: var(--color-muted);
+		border-radius: 0.25em;
+		padding: 0.15em 0.4em;
+		font-size: 0.875em;
+	}
+
+	& :where(pre) {
+		margin-top: 1em;
+		margin-bottom: 1em;
+		padding: 1em;
+		border-radius: 0.5rem;
+		background-color: var(--color-muted);
+		overflow-x: auto;
+
+		& code {
+			background-color: transparent;
+			padding: 0;
+		}
+	}
+
+	& :where(hr) {
+		margin-top: 1.5em;
+		margin-bottom: 1.5em;
+		border-color: var(--color-border);
+	}
+
+	& :where(mark) {
+		background-color: var(--color-accent);
+		color: var(--color-accent-foreground);
+		padding: 0.05em 0.2em;
+		border-radius: 0.2em;
+	}
+}
+
 @keyframes fade-in-up {
 	from {
 		opacity: 0;
