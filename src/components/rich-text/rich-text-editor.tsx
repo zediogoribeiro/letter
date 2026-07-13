@@ -12,12 +12,14 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { MenuBar } from "./menu-bar";
 
 interface RichTextEditorProps {
+	content?: JSONContent;
 	onChange?: (content: JSONContent) => void;
 }
 
-const RichTextEditor = ({ onChange }: RichTextEditorProps) => {
+const RichTextEditor = ({ content, onChange }: RichTextEditorProps) => {
 	const editor = useEditor({
 		immediatelyRender: false,
+		content,
 		extensions: [
 			StarterKit.configure({
 				bulletList: {

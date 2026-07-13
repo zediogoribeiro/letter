@@ -1,9 +1,46 @@
+import { queryOptions } from "@tanstack/react-query";
 import { createServerFn } from "@tanstack/react-start";
 import { getRequestHeaders } from "@tanstack/react-start/server";
+import { eq } from "drizzle-orm";
 import { z } from "zod";
 import { db } from "../../db/drizzle";
 import { articles, type JsonValue } from "../../db/schema";
 import { auth } from "./auth";
+
+const requireAdmin = async () => {
+	const session = await auth.api.getSession({ headers: getRequestHeaders() });
+
+	if (!session || session.user.role !== "admin") {
+		throw new Error("Unauthorized");
+	}
+
+	return session;
+};
+
+const slugify = (title: string) =>
+	title
+		.toLowerCase()
+		.trim()
+		.replace(/[^a-z0-9]+/g, "-")
+		.replace(/^-+|-+$/g, "");
+
+// slug has a unique DB constraint; append -2, -3, ... until we find one that's free
+const ensureUniqueSlug = async (base: string, excludeId?: string) => {
+	let slug = base;
+	let suffix = 2;
+
+	while (true) {
+		const existing = await db.query.articles.findFirst({
+			where: eq(articles.slug, slug),
+		});
+
+		if (!existing || existing.id === excludeId) {
+			return slug;
+		}
+
+		slug = `${base}-${suffix++}`;
+	}
+};
 
 const saveArticleSchema = z.object({
 	status: z.enum(["draft", "published"]),
@@ -17,20 +54,15 @@ const saveArticleSchema = z.object({
 export const saveArticleFn = createServerFn({ method: "POST" })
 	.validator(saveArticleSchema)
 	.handler(async ({ data }) => {
-		const session = await auth.api.getSession({
-			headers: getRequestHeaders(),
-		});
-
-		if (!session || session.user.role !== "admin") {
-			throw new Error("Unauthorized");
-		}
+		const session = await requireAdmin();
+		const slug = await ensureUniqueSlug(data.slug || slugify(data.title));
 
 		const [row] = await db
 			.insert(articles)
 			.values({
 				status: data.status,
 				title: data.title,
-				slug: data.slug,
+				slug,
 				category: data.category,
 				description: data.description,
 				content: data.content,
@@ -39,4 +71,101 @@ export const saveArticleFn = createServerFn({ method: "POST" })
 			.returning();
 
 		return row;
+	});
+
+const updateArticleSchema = saveArticleSchema.extend({ id: z.string() });
+
+export const updateArticleFn = createServerFn({ method: "POST" })
+	.validator(updateArticleSchema)
+	.handler(async ({ data }) => {
+		await requireAdmin();
+		const slug = await ensureUniqueSlug(
+			data.slug || slugify(data.title),
+			data.id,
+		);
+
+		const [row] = await db
+			.update(articles)
+			.set({
+				status: data.status,
+				title: data.title,
+				slug,
+				category: data.category,
+				description: data.description,
+				content: data.content,
+			})
+			.where(eq(articles.id, data.id))
+			.returning();
+
+		return row;
+	});
+
+const getArticleBySlugSchema = z.object({ slug: z.string() });
+
+export const getArticleBySlugFn = createServerFn({ method: "GET" })
+	.validator(getArticleBySlugSchema)
+	.handler(async ({ data }) => {
+		await requireAdmin();
+
+		const article = await db.query.articles.findFirst({
+			where: eq(articles.slug, data.slug),
+		});
+
+		if (!article) {
+			throw new Error("Article not found");
+		}
+
+		return article;
+	});
+
+export const articleBySlugQueryOptions = (slug: string) =>
+	queryOptions({
+		queryKey: ["articles", "slug", slug],
+		queryFn: () => getArticleBySlugFn({ data: { slug } }),
+	});
+
+export const listArticlesFn = createServerFn({ method: "GET" }).handler(
+	async () => {
+		await requireAdmin();
+
+		return db.query.articles.findMany({
+			with: { author: true },
+			orderBy: (articles, { desc }) => [desc(articles.createdAt)],
+		});
+	},
+);
+
+export const articlesQueryOptions = () =>
+	queryOptions({
+		queryKey: ["articles"],
+		queryFn: () => listArticlesFn(),
+	});
+
+const updateArticleStatusSchema = z.object({
+	id: z.string(),
+	status: z.enum(["draft", "published"]),
+});
+
+export const updateArticleStatusFn = createServerFn({ method: "POST" })
+	.validator(updateArticleStatusSchema)
+	.handler(async ({ data }) => {
+		await requireAdmin();
+
+		const [row] = await db
+			.update(articles)
+			.set({ status: data.status })
+			.where(eq(articles.id, data.id))
+			.returning();
+
+		return row;
+	});
+
+const deleteArticleSchema = z.object({ id: z.string() });
+
+export const deleteArticleFn = createServerFn({ method: "POST" })
+	.validator(deleteArticleSchema)
+	.handler(async ({ data }) => {
+		await requireAdmin();
+
+		await db.delete(articles).where(eq(articles.id, data.id));
 	});

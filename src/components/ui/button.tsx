@@ -67,7 +67,6 @@ const CompoundButton = ({
 					size,
 					active,
 				}),
-				isLoading && "text-transparent transition-none",
 			)}
 			ref={ref}
 			type={asChild ? undefined : type}
@@ -78,7 +77,10 @@ const CompoundButton = ({
 			<Slottable asChild={asChild} child={children}>
 				{(child) => (
 					<>
-						{child}
+						{/* visibility (not color) survives the browser's own disabled-button text styling */}
+						<span className={cn("contents", isLoading && "invisible")}>
+							{child}
+						</span>
 						{isLoading && (
 							<span
 								data-button-spinner

@@ -93,7 +93,7 @@ export const articles = pgTable(
       .primaryKey()
       .$defaultFn(() => crypto.randomUUID()),
     title: text("title").notNull(),
-    slug: text("slug"),
+    slug: text("slug").unique(),
     category: text("category"),
     description: text("description"),
     content: jsonb("content").$type<JsonValue>(),
@@ -109,8 +109,6 @@ export const articles = pgTable(
   },
   (table) => [index("articles_authorId_idx").on(table.authorId)],
 );
-
-export const schema = { user, session, account, verification, articles };
 
 export const userRelations = relations(user, ({ many }) => ({
   sessions: many(session),
@@ -138,3 +136,15 @@ export const accountRelations = relations(account, ({ one }) => ({
     references: [user.id],
   }),
 }));
+
+export const schema = {
+  user,
+  session,
+  account,
+  verification,
+  articles,
+  userRelations,
+  articlesRelations,
+  sessionRelations,
+  accountRelations,
+};
