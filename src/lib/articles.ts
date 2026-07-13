@@ -1,21 +1,10 @@
 import { queryOptions } from "@tanstack/react-query";
 import { createServerFn } from "@tanstack/react-start";
-import { getRequestHeaders } from "@tanstack/react-start/server";
 import { eq } from "drizzle-orm";
 import { z } from "zod";
 import { db } from "../../db/drizzle";
 import { articles, type JsonValue } from "../../db/schema";
-import { auth } from "./auth";
-
-const requireAdmin = async () => {
-	const session = await auth.api.getSession({ headers: getRequestHeaders() });
-
-	if (!session || session.user.role !== "admin") {
-		throw new Error("Unauthorized");
-	}
-
-	return session;
-};
+import { requireAdmin } from "./middleware";
 
 const slugify = (title: string) =>
 	title
@@ -48,6 +37,7 @@ const saveArticleSchema = z.object({
 	slug: z.string().optional(),
 	category: z.string().optional(),
 	description: z.string().optional(),
+	coverImage: z.string().url().optional(),
 	content: z.custom<JsonValue>().optional(),
 });
 
@@ -65,6 +55,7 @@ export const saveArticleFn = createServerFn({ method: "POST" })
 				slug,
 				category: data.category,
 				description: data.description,
+				coverImage: data.coverImage,
 				content: data.content,
 				authorId: session.user.id,
 			})
@@ -92,6 +83,7 @@ export const updateArticleFn = createServerFn({ method: "POST" })
 				slug,
 				category: data.category,
 				description: data.description,
+				coverImage: data.coverImage ?? null,
 				content: data.content,
 			})
 			.where(eq(articles.id, data.id))

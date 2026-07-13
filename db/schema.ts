@@ -96,6 +96,7 @@ export const articles = pgTable(
     slug: text("slug").unique(),
     category: text("category"),
     description: text("description"),
+    coverImage: text("cover_image"),
     content: jsonb("content").$type<JsonValue>(),
     status: text("status").notNull().default("draft"),
     authorId: text("author_id")

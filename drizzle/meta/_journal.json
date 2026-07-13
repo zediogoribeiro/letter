@@ -15,6 +15,13 @@
       "when": 1783888435196,
       "tag": "0001_articles_slug_unique",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1783940161686,
+      "tag": "0002_articles_cover_image",
+      "breakpoints": true
     }
   ]
 }

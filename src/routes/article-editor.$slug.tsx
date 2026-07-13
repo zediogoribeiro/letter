@@ -24,6 +24,7 @@ function RouteComponent() {
 				slug: article.slug ?? undefined,
 				category: (article.category ?? undefined) as ArticleValues["category"],
 				description: article.description ?? undefined,
+				coverImage: article.coverImage ?? undefined,
 				content: article.content as ArticleValues["content"],
 			}}
 			onSaved={(saved) => {

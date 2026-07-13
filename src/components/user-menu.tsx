@@ -1,10 +1,10 @@
-import { DropdownMenu } from "@/components/ui/dropdown";
-import { Avatar } from "@/components/ui/avatar";
-import { authClient } from "@/lib/auth-client";
+import { LayoutIcon, SignOutIcon } from "@phosphor-icons/react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
+import { Avatar } from "@/components/ui/avatar";
+import { DropdownMenu } from "@/components/ui/dropdown";
+import { authClient } from "@/lib/auth-client";
 import { sessionQueryOptions } from "@/lib/middleware";
-import { LayoutIcon, SignOutIcon } from "@phosphor-icons/react";
 
 function UserMenu() {
 	const navigate = useNavigate();
@@ -22,7 +22,11 @@ function UserMenu() {
 		<DropdownMenu>
 			<DropdownMenu.Trigger asChild className="cursor-pointer ml-2">
 				<Avatar size="sm">
-					<Avatar.Fallback>{session.user.name}</Avatar.Fallback>
+					{session.user.image ? (
+						<Avatar.Image src={session.user.image} />
+					) : (
+						<Avatar.Fallback>{session.user.name}</Avatar.Fallback>
+					)}
 				</Avatar>
 			</DropdownMenu.Trigger>
 

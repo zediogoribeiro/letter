@@ -5,6 +5,7 @@ import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
+import { CoverImageUpload } from "@/components/cover-image-upload";
 import RichTextEditor from "@/components/rich-text/rich-text-editor";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -28,6 +29,7 @@ const articleSchema = z
 		slug: z.string().optional(),
 		category: z.enum(CATEGORIES).optional(),
 		description: z.string().max(280, "Keep it under 280 characters").optional(),
+		coverImage: z.string().url().or(z.literal("")).optional(),
 		content: z.custom<JSONContent>().optional(),
 	})
 	.superRefine((data, ctx) => {
@@ -113,6 +115,7 @@ export const ArticleForm = ({
 			slug: values.slug,
 			category: values.category,
 			description: values.description,
+			coverImage: values.coverImage || undefined,
 			content: values.content,
 		};
 
@@ -240,6 +243,17 @@ export const ArticleForm = ({
 							</p>
 						)}
 					</div>
+				</div>
+
+				<div className="space-y-2">
+					<Label htmlFor="cover-image">Cover image</Label>
+					<Controller
+						control={control}
+						name="coverImage"
+						render={({ field }) => (
+							<CoverImageUpload value={field.value} onChange={field.onChange} />
+						)}
+					/>
 				</div>
 
 				<div className="space-y-2">
