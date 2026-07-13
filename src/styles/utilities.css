@@ -1,6 +1,122 @@
 @utility editorial-heading {
-  font-family: var(--font-display);
-  font-weight: 400;
-  letter-spacing: -0.03em;
-  line-height: 1.05;
+	font-family: var(--font-display);
+	font-weight: 400;
+	letter-spacing: -0.03em;
+	line-height: 1.05;
+}
+
+@keyframes fade-in-up {
+	from {
+		opacity: 0;
+		transform: translateY(12px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@keyframes fade-in {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes fade-out {
+	from {
+		opacity: 1;
+	}
+	to {
+		opacity: 0;
+	}
+}
+
+@keyframes slide-in-from-right {
+	from {
+		transform: translateX(100%);
+	}
+	to {
+		transform: translateX(0);
+	}
+}
+
+@keyframes slide-out-to-right {
+	from {
+		transform: translateX(0);
+	}
+	to {
+		transform: translateX(100%);
+	}
+}
+
+@keyframes soft-pulse {
+	0%,
+	100% {
+		opacity: 1;
+	}
+	50% {
+		opacity: 0.55;
+	}
+}
+
+@utility animate-fade-in-up {
+	animation: fade-in-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@utility animate-fade-in {
+	animation: fade-in 0.5s ease-out both;
+}
+
+@utility animate-fade-out {
+	animation: fade-out 0.3s ease-in both;
+}
+
+@utility animate-slide-in-from-right {
+	animation: slide-in-from-right 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@utility animate-slide-out-to-right {
+	animation: slide-out-to-right 0.3s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@utility animate-soft-pulse {
+	animation: soft-pulse 2.4s ease-in-out infinite;
+}
+
+@utility delay-75 {
+	animation-delay: 75ms;
+}
+@utility delay-150 {
+	animation-delay: 150ms;
+}
+@utility delay-300 {
+	animation-delay: 300ms;
+}
+@utility delay-500 {
+	animation-delay: 500ms;
+}
+
+@utility nav-underline {
+	position: relative;
+
+	&::after {
+		content: "";
+		position: absolute;
+		left: 0.75rem;
+		right: 0.75rem;
+		bottom: 0.35rem;
+		height: 0.5px;
+		background-color: currentColor;
+		transform: scaleX(0);
+		transform-origin: right;
+		transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+	}
+
+	&:hover::after {
+		transform: scaleX(1);
+		transform-origin: left;
+	}
 }

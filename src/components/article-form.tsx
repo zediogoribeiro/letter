@@ -13,14 +13,7 @@ import { Label } from "@/components/ui/label";
 import { Select } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/text-area";
 import { saveArticleFn, updateArticleFn } from "@/lib/articles";
-
-const CATEGORIES = [
-	"Marketing",
-	"Design",
-	"Engineering",
-	"Product",
-	"Culture",
-] as const;
+import { CATEGORIES } from "@/lib/categories";
 
 const articleSchema = z
 	.object({

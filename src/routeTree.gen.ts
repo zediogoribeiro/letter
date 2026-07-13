@@ -10,8 +10,13 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SignupRouteImport } from './routes/signup'
+import { Route as ProductRouteImport } from './routes/product'
+import { Route as MarketingRouteImport } from './routes/marketing'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as EngineeringRouteImport } from './routes/engineering'
+import { Route as DesignRouteImport } from './routes/design'
 import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as CultureRouteImport } from './routes/culture'
 import { Route as ArticleEditorRouteImport } from './routes/article-editor'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ArticleEditorIndexRouteImport } from './routes/article-editor.index'
@@ -23,14 +28,39 @@ const SignupRoute = SignupRouteImport.update({
   path: '/signup',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProductRoute = ProductRouteImport.update({
+  id: '/product',
+  path: '/product',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MarketingRoute = MarketingRouteImport.update({
+  id: '/marketing',
+  path: '/marketing',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EngineeringRoute = EngineeringRouteImport.update({
+  id: '/engineering',
+  path: '/engineering',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DesignRoute = DesignRouteImport.update({
+  id: '/design',
+  path: '/design',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DashboardRoute = DashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CultureRoute = CultureRouteImport.update({
+  id: '/culture',
+  path: '/culture',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ArticleEditorRoute = ArticleEditorRouteImport.update({
@@ -62,8 +92,13 @@ const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/article-editor': typeof ArticleEditorRouteWithChildren
+  '/culture': typeof CultureRoute
   '/dashboard': typeof DashboardRoute
+  '/design': typeof DesignRoute
+  '/engineering': typeof EngineeringRoute
   '/login': typeof LoginRoute
+  '/marketing': typeof MarketingRoute
+  '/product': typeof ProductRoute
   '/signup': typeof SignupRoute
   '/article-editor/$slug': typeof ArticleEditorSlugRoute
   '/article-editor/': typeof ArticleEditorIndexRoute
@@ -71,8 +106,13 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/culture': typeof CultureRoute
   '/dashboard': typeof DashboardRoute
+  '/design': typeof DesignRoute
+  '/engineering': typeof EngineeringRoute
   '/login': typeof LoginRoute
+  '/marketing': typeof MarketingRoute
+  '/product': typeof ProductRoute
   '/signup': typeof SignupRoute
   '/article-editor/$slug': typeof ArticleEditorSlugRoute
   '/article-editor': typeof ArticleEditorIndexRoute
@@ -82,8 +122,13 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/article-editor': typeof ArticleEditorRouteWithChildren
+  '/culture': typeof CultureRoute
   '/dashboard': typeof DashboardRoute
+  '/design': typeof DesignRoute
+  '/engineering': typeof EngineeringRoute
   '/login': typeof LoginRoute
+  '/marketing': typeof MarketingRoute
+  '/product': typeof ProductRoute
   '/signup': typeof SignupRoute
   '/article-editor/$slug': typeof ArticleEditorSlugRoute
   '/article-editor/': typeof ArticleEditorIndexRoute
@@ -94,8 +139,13 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/article-editor'
+    | '/culture'
     | '/dashboard'
+    | '/design'
+    | '/engineering'
     | '/login'
+    | '/marketing'
+    | '/product'
     | '/signup'
     | '/article-editor/$slug'
     | '/article-editor/'
@@ -103,8 +153,13 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/culture'
     | '/dashboard'
+    | '/design'
+    | '/engineering'
     | '/login'
+    | '/marketing'
+    | '/product'
     | '/signup'
     | '/article-editor/$slug'
     | '/article-editor'
@@ -113,8 +168,13 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/article-editor'
+    | '/culture'
     | '/dashboard'
+    | '/design'
+    | '/engineering'
     | '/login'
+    | '/marketing'
+    | '/product'
     | '/signup'
     | '/article-editor/$slug'
     | '/article-editor/'
@@ -124,8 +184,13 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ArticleEditorRoute: typeof ArticleEditorRouteWithChildren
+  CultureRoute: typeof CultureRoute
   DashboardRoute: typeof DashboardRoute
+  DesignRoute: typeof DesignRoute
+  EngineeringRoute: typeof EngineeringRoute
   LoginRoute: typeof LoginRoute
+  MarketingRoute: typeof MarketingRoute
+  ProductRoute: typeof ProductRoute
   SignupRoute: typeof SignupRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
 }
@@ -139,6 +204,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SignupRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/product': {
+      id: '/product'
+      path: '/product'
+      fullPath: '/product'
+      preLoaderRoute: typeof ProductRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/marketing': {
+      id: '/marketing'
+      path: '/marketing'
+      fullPath: '/marketing'
+      preLoaderRoute: typeof MarketingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/login': {
       id: '/login'
       path: '/login'
@@ -146,11 +225,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/engineering': {
+      id: '/engineering'
+      path: '/engineering'
+      fullPath: '/engineering'
+      preLoaderRoute: typeof EngineeringRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/design': {
+      id: '/design'
+      path: '/design'
+      fullPath: '/design'
+      preLoaderRoute: typeof DesignRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/dashboard': {
       id: '/dashboard'
       path: '/dashboard'
       fullPath: '/dashboard'
       preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/culture': {
+      id: '/culture'
+      path: '/culture'
+      fullPath: '/culture'
+      preLoaderRoute: typeof CultureRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/article-editor': {
@@ -208,8 +308,13 @@ const ArticleEditorRouteWithChildren = ArticleEditorRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ArticleEditorRoute: ArticleEditorRouteWithChildren,
+  CultureRoute: CultureRoute,
   DashboardRoute: DashboardRoute,
+  DesignRoute: DesignRoute,
+  EngineeringRoute: EngineeringRoute,
   LoginRoute: LoginRoute,
+  MarketingRoute: MarketingRoute,
+  ProductRoute: ProductRoute,
   SignupRoute: SignupRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
 }
