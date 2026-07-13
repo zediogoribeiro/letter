@@ -1,17 +1,17 @@
+import { TanStackDevtools } from "@tanstack/react-devtools";
+import type { QueryClient } from "@tanstack/react-query";
 import {
+	createRootRouteWithContext,
 	HeadContent,
 	Scripts,
-	createRootRouteWithContext,
 } from "@tanstack/react-router";
-import type { QueryClient } from "@tanstack/react-query";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
-import { TanStackDevtools } from "@tanstack/react-devtools";
 import { Toaster } from "sonner";
-
-import appCss from "../styles/app.css?url";
+import { Footer } from "#/components/globals/footer";
 import { NavBar } from "@/components/globals/navbar";
 import { useTheme } from "@/hooks/use-theme";
 import { sessionQueryOptions } from "@/lib/middleware";
+import appCss from "../styles/app.css?url";
 
 const themeInitScript = `
 (function () {
@@ -71,6 +71,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 			<body className="flex min-h-screen flex-col">
 				<NavBar />
 				{children}
+				<Footer />
 				<TanStackDevtools
 					config={{
 						position: "bottom-right",

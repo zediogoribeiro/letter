@@ -18,7 +18,7 @@ export function NavBar() {
 	const { theme, toggleTheme } = useTheme();
 
 	return (
-		<header className="h-(--navbar-height) animate-fade-in sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur-sm">
+		<header className="h-(--navbar-height) animate-fade-in sticky top-0 z-50 border-b border-border bg-background/85 backdrop-blur-sm">
 			<div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
 				<div className="flex items-center gap-6">
 					<Link to="/" className="group flex items-center gap-2">
