@@ -7,7 +7,7 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
 import { useTheme } from "@/hooks/use-theme";
-import { CATEGORIES, CATEGORY_PATHS } from "@/lib/categories";
+import { CATEGORIES } from "@/lib/categories";
 import { sessionQueryOptions } from "@/lib/middleware";
 import { Button, IconButton } from "../ui/button";
 import { Drawer } from "../ui/drawer";
@@ -30,7 +30,8 @@ export function NavBar() {
 						{CATEGORIES.map((category) => (
 							<Link
 								key={category}
-								to={CATEGORY_PATHS[category]}
+								to="/$category"
+								params={{ category: category.toLowerCase() }}
 								className="nav-underline rounded-md px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
 							>
 								<span>{category}</span>
@@ -96,7 +97,8 @@ export function NavBar() {
 								{CATEGORIES.map((category) => (
 									<Drawer.Close key={category} asChild>
 										<Link
-											to={CATEGORY_PATHS[category]}
+											to="/$category"
+											params={{ category: category.toLowerCase() }}
 											className="nav-underline rounded-md px-3 py-3 text-lg font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
 										>
 											{category}

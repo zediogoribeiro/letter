@@ -8,7 +8,7 @@ export const Route = createFileRoute("/article-editor")({
 		}
 
 		if (context.session.user.role !== "admin") {
-			throw redirect({ to: "/dashboard" });
+			throw redirect({ to: "/unauthorized" });
 		}
 
 		return { session: context.session };

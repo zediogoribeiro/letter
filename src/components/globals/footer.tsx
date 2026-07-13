@@ -1,13 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { Divider } from "../ui/divider";
 
-const footerLinks = [
-	{ label: "About", to: "/about" },
-	{ label: "Guidelines", to: "/guidelines" },
-	{ label: "Privacy", to: "/privacy" },
-	{ label: "Terms", to: "/terms" },
-];
-
 export const Footer = () => {
 	return (
 		<footer className="border-t border-border bg-background">

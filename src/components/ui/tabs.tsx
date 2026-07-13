@@ -68,8 +68,10 @@ const TabsItems = ({ children, className, ...props }: TabsItemsProps) => {
 			className={cn("flex items-center gap-1.5 pb-4", className)}
 			{...props}
 		>
-			{Children.map(children, (child, index) => (
-				<ItemIndexContext value={index}>{child}</ItemIndexContext>
+			{Children.toArray(children).map((child, index) => (
+				<ItemIndexContext key={index} value={index}>
+					{child}
+				</ItemIndexContext>
 			))}
 		</div>
 	);
@@ -140,8 +142,10 @@ export interface TabsPanelsProps
 const TabsPanels = ({ children, className, ...props }: TabsPanelsProps) => {
 	return (
 		<div className={className} {...props}>
-			{Children.map(children, (child, index) => (
-				<PanelIndexContext value={index}>{child}</PanelIndexContext>
+			{Children.toArray(children).map((child, index) => (
+				<PanelIndexContext key={index} value={index}>
+					{child}
+				</PanelIndexContext>
 			))}
 		</div>
 	);

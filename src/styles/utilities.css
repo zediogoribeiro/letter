@@ -52,6 +52,16 @@
 	}
 }
 
+@keyframes bounce-letter {
+	0%,
+	100% {
+		transform: translateY(0);
+	}
+	50% {
+		transform: translateY(-0.1em);
+	}
+}
+
 @keyframes soft-pulse {
 	0%,
 	100% {
@@ -84,6 +94,10 @@
 
 @utility animate-soft-pulse {
 	animation: soft-pulse 2.4s ease-in-out infinite;
+}
+
+@utility animate-bounce-letter {
+	animation: bounce-letter 2.8s ease-in-out infinite;
 }
 
 @utility delay-75 {

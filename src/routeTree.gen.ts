@@ -9,33 +9,25 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as UnauthorizedRouteImport } from './routes/unauthorized'
 import { Route as SignupRouteImport } from './routes/signup'
-import { Route as ProductRouteImport } from './routes/product'
-import { Route as MarketingRouteImport } from './routes/marketing'
 import { Route as LoginRouteImport } from './routes/login'
-import { Route as EngineeringRouteImport } from './routes/engineering'
-import { Route as DesignRouteImport } from './routes/design'
 import { Route as DashboardRouteImport } from './routes/dashboard'
-import { Route as CultureRouteImport } from './routes/culture'
 import { Route as ArticleEditorRouteImport } from './routes/article-editor'
+import { Route as CategoryRouteImport } from './routes/$category'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ArticleEditorIndexRouteImport } from './routes/article-editor.index'
 import { Route as ArticleEditorSlugRouteImport } from './routes/article-editor.$slug'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 
+const UnauthorizedRoute = UnauthorizedRouteImport.update({
+  id: '/unauthorized',
+  path: '/unauthorized',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SignupRoute = SignupRouteImport.update({
   id: '/signup',
   path: '/signup',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ProductRoute = ProductRouteImport.update({
-  id: '/product',
-  path: '/product',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const MarketingRoute = MarketingRouteImport.update({
-  id: '/marketing',
-  path: '/marketing',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginRoute = LoginRouteImport.update({
@@ -43,29 +35,19 @@ const LoginRoute = LoginRouteImport.update({
   path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
-const EngineeringRoute = EngineeringRouteImport.update({
-  id: '/engineering',
-  path: '/engineering',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DesignRoute = DesignRouteImport.update({
-  id: '/design',
-  path: '/design',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const DashboardRoute = DashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CultureRoute = CultureRouteImport.update({
-  id: '/culture',
-  path: '/culture',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ArticleEditorRoute = ArticleEditorRouteImport.update({
   id: '/article-editor',
   path: '/article-editor',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CategoryRoute = CategoryRouteImport.update({
+  id: '/$category',
+  path: '/$category',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -91,29 +73,23 @@ const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/$category': typeof CategoryRoute
   '/article-editor': typeof ArticleEditorRouteWithChildren
-  '/culture': typeof CultureRoute
   '/dashboard': typeof DashboardRoute
-  '/design': typeof DesignRoute
-  '/engineering': typeof EngineeringRoute
   '/login': typeof LoginRoute
-  '/marketing': typeof MarketingRoute
-  '/product': typeof ProductRoute
   '/signup': typeof SignupRoute
+  '/unauthorized': typeof UnauthorizedRoute
   '/article-editor/$slug': typeof ArticleEditorSlugRoute
   '/article-editor/': typeof ArticleEditorIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/culture': typeof CultureRoute
+  '/$category': typeof CategoryRoute
   '/dashboard': typeof DashboardRoute
-  '/design': typeof DesignRoute
-  '/engineering': typeof EngineeringRoute
   '/login': typeof LoginRoute
-  '/marketing': typeof MarketingRoute
-  '/product': typeof ProductRoute
   '/signup': typeof SignupRoute
+  '/unauthorized': typeof UnauthorizedRoute
   '/article-editor/$slug': typeof ArticleEditorSlugRoute
   '/article-editor': typeof ArticleEditorIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
@@ -121,15 +97,12 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/$category': typeof CategoryRoute
   '/article-editor': typeof ArticleEditorRouteWithChildren
-  '/culture': typeof CultureRoute
   '/dashboard': typeof DashboardRoute
-  '/design': typeof DesignRoute
-  '/engineering': typeof EngineeringRoute
   '/login': typeof LoginRoute
-  '/marketing': typeof MarketingRoute
-  '/product': typeof ProductRoute
   '/signup': typeof SignupRoute
+  '/unauthorized': typeof UnauthorizedRoute
   '/article-editor/$slug': typeof ArticleEditorSlugRoute
   '/article-editor/': typeof ArticleEditorIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
@@ -138,44 +111,35 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/$category'
     | '/article-editor'
-    | '/culture'
     | '/dashboard'
-    | '/design'
-    | '/engineering'
     | '/login'
-    | '/marketing'
-    | '/product'
     | '/signup'
+    | '/unauthorized'
     | '/article-editor/$slug'
     | '/article-editor/'
     | '/api/auth/$'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/culture'
+    | '/$category'
     | '/dashboard'
-    | '/design'
-    | '/engineering'
     | '/login'
-    | '/marketing'
-    | '/product'
     | '/signup'
+    | '/unauthorized'
     | '/article-editor/$slug'
     | '/article-editor'
     | '/api/auth/$'
   id:
     | '__root__'
     | '/'
+    | '/$category'
     | '/article-editor'
-    | '/culture'
     | '/dashboard'
-    | '/design'
-    | '/engineering'
     | '/login'
-    | '/marketing'
-    | '/product'
     | '/signup'
+    | '/unauthorized'
     | '/article-editor/$slug'
     | '/article-editor/'
     | '/api/auth/$'
@@ -183,39 +147,29 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CategoryRoute: typeof CategoryRoute
   ArticleEditorRoute: typeof ArticleEditorRouteWithChildren
-  CultureRoute: typeof CultureRoute
   DashboardRoute: typeof DashboardRoute
-  DesignRoute: typeof DesignRoute
-  EngineeringRoute: typeof EngineeringRoute
   LoginRoute: typeof LoginRoute
-  MarketingRoute: typeof MarketingRoute
-  ProductRoute: typeof ProductRoute
   SignupRoute: typeof SignupRoute
+  UnauthorizedRoute: typeof UnauthorizedRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/unauthorized': {
+      id: '/unauthorized'
+      path: '/unauthorized'
+      fullPath: '/unauthorized'
+      preLoaderRoute: typeof UnauthorizedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/signup': {
       id: '/signup'
       path: '/signup'
       fullPath: '/signup'
       preLoaderRoute: typeof SignupRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/product': {
-      id: '/product'
-      path: '/product'
-      fullPath: '/product'
-      preLoaderRoute: typeof ProductRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/marketing': {
-      id: '/marketing'
-      path: '/marketing'
-      fullPath: '/marketing'
-      preLoaderRoute: typeof MarketingRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/login': {
@@ -225,20 +179,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/engineering': {
-      id: '/engineering'
-      path: '/engineering'
-      fullPath: '/engineering'
-      preLoaderRoute: typeof EngineeringRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/design': {
-      id: '/design'
-      path: '/design'
-      fullPath: '/design'
-      preLoaderRoute: typeof DesignRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/dashboard': {
       id: '/dashboard'
       path: '/dashboard'
@@ -246,18 +186,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/culture': {
-      id: '/culture'
-      path: '/culture'
-      fullPath: '/culture'
-      preLoaderRoute: typeof CultureRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/article-editor': {
       id: '/article-editor'
       path: '/article-editor'
       fullPath: '/article-editor'
       preLoaderRoute: typeof ArticleEditorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/$category': {
+      id: '/$category'
+      path: '/$category'
+      fullPath: '/$category'
+      preLoaderRoute: typeof CategoryRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -307,15 +247,12 @@ const ArticleEditorRouteWithChildren = ArticleEditorRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CategoryRoute: CategoryRoute,
   ArticleEditorRoute: ArticleEditorRouteWithChildren,
-  CultureRoute: CultureRoute,
   DashboardRoute: DashboardRoute,
-  DesignRoute: DesignRoute,
-  EngineeringRoute: EngineeringRoute,
   LoginRoute: LoginRoute,
-  MarketingRoute: MarketingRoute,
-  ProductRoute: ProductRoute,
   SignupRoute: SignupRoute,
+  UnauthorizedRoute: UnauthorizedRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
 }
 export const routeTree = rootRouteImport
