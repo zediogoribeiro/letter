@@ -1,17 +1,17 @@
-import { Link, redirect } from "@tanstack/react-router";
-import { useQuery } from "@tanstack/react-query";
-import { Button, IconButton } from "../ui/button";
 import {
+	ListIcon,
+	MoonIcon,
 	PencilSimpleLineIcon,
 	SunIcon,
-	MoonIcon,
-	ListIcon,
 } from "@phosphor-icons/react";
-import { UserMenu } from "../user-menu";
-import { sessionQueryOptions } from "@/lib/middleware";
+import { useQuery } from "@tanstack/react-query";
+import { Link } from "@tanstack/react-router";
 import { useTheme } from "@/hooks/use-theme";
 import { CATEGORIES, CATEGORY_PATHS } from "@/lib/categories";
+import { sessionQueryOptions } from "@/lib/middleware";
+import { Button, IconButton } from "../ui/button";
 import { Drawer } from "../ui/drawer";
+import { UserMenu } from "../user-menu";
 
 export function NavBar() {
 	const { data: session, isPending } = useQuery(sessionQueryOptions());
@@ -97,7 +97,7 @@ export function NavBar() {
 									<Drawer.Close key={category} asChild>
 										<Link
 											to={CATEGORY_PATHS[category]}
-											className="rounded-md px-3 py-3 text-lg font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+											className="nav-underline rounded-md px-3 py-3 text-lg font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
 										>
 											{category}
 										</Link>

@@ -41,7 +41,7 @@ const RichTextEditor = ({ content, onChange }: RichTextEditorProps) => {
 		editorProps: {
 			attributes: {
 				class:
-					"min-h-[156px] border border-border py-2 px-3 s rounded-md shadow-sm font-display outline-none transition focus-visible:ring-1 focus-visible:ring-ring",
+					"min-h-39 border border-border py-2 px-3 s rounded-md shadow-sm font-display outline-none transition focus-visible:ring-1 focus-visible:ring-ring",
 			},
 		},
 		onUpdate: ({ editor }) => {
@@ -55,7 +55,7 @@ const RichTextEditor = ({ content, onChange }: RichTextEditorProps) => {
 		return (
 			<div>
 				<Skeleton className="mb-2 h-11 border border-border shadow-sm" />
-				<Skeleton className="min-h-[156px] border border-border shadow-sm" />
+				<Skeleton className="min-h-39 border border-border shadow-sm" />
 			</div>
 		);
 	}

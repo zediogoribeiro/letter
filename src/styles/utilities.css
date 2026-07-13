@@ -115,7 +115,8 @@
 		transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
 	}
 
-	&:hover::after {
+	&:hover::after,
+	&[data-status="active"]::after {
 		transform: scaleX(1);
 		transform-origin: left;
 	}
