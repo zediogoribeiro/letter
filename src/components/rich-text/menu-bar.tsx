@@ -14,10 +14,17 @@ import {
 } from "@phosphor-icons/react";
 import type { Editor } from "@tiptap/react";
 import { useEditorState } from "@tiptap/react";
+import { cn } from "#/lib/utils/classnames";
 import { IconButton } from "../ui/button";
 import { Divider } from "../ui/divider";
 
-export const MenuBar = ({ editor }: { editor: Editor }) => {
+export const MenuBar = ({
+	editor,
+	className,
+}: {
+	editor: Editor;
+	className: string;
+}) => {
 	const editorState = useEditorState({
 		editor,
 		selector: (ctx) => {
@@ -49,7 +56,12 @@ export const MenuBar = ({ editor }: { editor: Editor }) => {
 	}
 
 	return (
-		<div className="border border-border p-1 rounded-md mb-2 shadow-sm">
+		<div
+			className={cn(
+				"border border-border p-1 rounded-md mb-2 shadow-sm",
+				className,
+			)}
+		>
 			<div className="control-group">
 				<div className="button-group flex flex-wrap gap-1">
 					<IconButton

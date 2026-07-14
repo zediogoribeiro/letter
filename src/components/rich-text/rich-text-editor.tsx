@@ -7,7 +7,8 @@ import {
 	useEditor,
 } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { cn } from "#/lib/utils/classnames";
 import { Skeleton } from "@/components/ui/skeleton";
 import { MenuBar } from "./menu-bar";
 
@@ -63,8 +64,11 @@ const RichTextEditor = ({ content, onChange }: RichTextEditorProps) => {
 
 	return (
 		<EditorContext.Provider value={providerValue}>
-			<div>
-				<MenuBar editor={editor} />
+			<div id="sticky-sentinel" className="relative">
+				<MenuBar
+					editor={editor}
+					className={cn("sticky top-16  bg-background z-10 ")}
+				/>
 				<EditorContent editor={editor} />
 			</div>
 		</EditorContext.Provider>
