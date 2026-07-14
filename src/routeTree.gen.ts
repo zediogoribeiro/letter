@@ -10,7 +10,9 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as UnauthorizedRouteImport } from './routes/unauthorized'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as SignupRouteImport } from './routes/signup'
+import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as CategoryRouteImport } from './routes/$category'
 import { Route as authorizedRouteRouteImport } from './routes/(authorized)/route'
@@ -29,9 +31,19 @@ const UnauthorizedRoute = UnauthorizedRouteImport.update({
   path: '/unauthorized',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SignupRoute = SignupRouteImport.update({
   id: '/signup',
   path: '/signup',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RobotsDottxtRoute = RobotsDottxtRouteImport.update({
+  id: '/robots.txt',
+  path: '/robots.txt',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginRoute = LoginRouteImport.update({
@@ -100,7 +112,9 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/$category': typeof CategoryRoute
   '/login': typeof LoginRoute
+  '/robots.txt': typeof RobotsDottxtRoute
   '/signup': typeof SignupRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/unauthorized': typeof UnauthorizedRoute
   '/articles/$articleId': typeof ArticlesArticleIdRoute
   '/article-editor': typeof authorizedadminArticleEditorRouteRouteWithChildren
@@ -114,7 +128,9 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/$category': typeof CategoryRoute
   '/login': typeof LoginRoute
+  '/robots.txt': typeof RobotsDottxtRoute
   '/signup': typeof SignupRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/unauthorized': typeof UnauthorizedRoute
   '/articles/$articleId': typeof ArticlesArticleIdRoute
   '/dashboard': typeof authorizeduserDashboardRoute
@@ -129,7 +145,9 @@ export interface FileRoutesById {
   '/(authorized)': typeof authorizedRouteRouteWithChildren
   '/$category': typeof CategoryRoute
   '/login': typeof LoginRoute
+  '/robots.txt': typeof RobotsDottxtRoute
   '/signup': typeof SignupRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/unauthorized': typeof UnauthorizedRoute
   '/(authorized)/(admin)': typeof authorizedadminRouteRouteWithChildren
   '/articles/$articleId': typeof ArticlesArticleIdRoute
@@ -146,7 +164,9 @@ export interface FileRouteTypes {
     | '/'
     | '/$category'
     | '/login'
+    | '/robots.txt'
     | '/signup'
+    | '/sitemap.xml'
     | '/unauthorized'
     | '/articles/$articleId'
     | '/article-editor'
@@ -160,7 +180,9 @@ export interface FileRouteTypes {
     | '/'
     | '/$category'
     | '/login'
+    | '/robots.txt'
     | '/signup'
+    | '/sitemap.xml'
     | '/unauthorized'
     | '/articles/$articleId'
     | '/dashboard'
@@ -174,7 +196,9 @@ export interface FileRouteTypes {
     | '/(authorized)'
     | '/$category'
     | '/login'
+    | '/robots.txt'
     | '/signup'
+    | '/sitemap.xml'
     | '/unauthorized'
     | '/(authorized)/(admin)'
     | '/articles/$articleId'
@@ -191,7 +215,9 @@ export interface RootRouteChildren {
   authorizedRouteRoute: typeof authorizedRouteRouteWithChildren
   CategoryRoute: typeof CategoryRoute
   LoginRoute: typeof LoginRoute
+  RobotsDottxtRoute: typeof RobotsDottxtRoute
   SignupRoute: typeof SignupRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   UnauthorizedRoute: typeof UnauthorizedRoute
   ArticlesArticleIdRoute: typeof ArticlesArticleIdRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
@@ -206,11 +232,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof UnauthorizedRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/signup': {
       id: '/signup'
       path: '/signup'
       fullPath: '/signup'
       preLoaderRoute: typeof SignupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/robots.txt': {
+      id: '/robots.txt'
+      path: '/robots.txt'
+      fullPath: '/robots.txt'
+      preLoaderRoute: typeof RobotsDottxtRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/login': {
@@ -351,7 +391,9 @@ const rootRouteChildren: RootRouteChildren = {
   authorizedRouteRoute: authorizedRouteRouteWithChildren,
   CategoryRoute: CategoryRoute,
   LoginRoute: LoginRoute,
+  RobotsDottxtRoute: RobotsDottxtRoute,
   SignupRoute: SignupRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   UnauthorizedRoute: UnauthorizedRoute,
   ArticlesArticleIdRoute: ArticlesArticleIdRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,

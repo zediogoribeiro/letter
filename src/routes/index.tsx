@@ -3,12 +3,17 @@ import { Sidebar } from "#/components/sidebar";
 import { HomeHero } from "@/components/home-hero";
 import { LatestArticles } from "@/components/latest-articles";
 import { heroArticleQueryOptions } from "@/lib/articles";
+import { seoHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/")({
 	component: Home,
-	head: () => ({
-		meta: [{ title: "Home — Letter" }],
-	}),
+	head: () =>
+		seoHead({
+			title: "Letter — an editorial publishing platform",
+			description:
+				"A magazine-style blog with articles on marketing, design, engineering, product, and culture.",
+			path: "/",
+		}),
 	beforeLoad: async ({ context }) => {
 		const heroArticle = await context.queryClient.ensureQueryData(
 			heroArticleQueryOptions(),

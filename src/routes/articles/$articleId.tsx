@@ -5,6 +5,7 @@ import { ArticleContent } from "@/components/article-content";
 import { ReadLaterButton } from "@/components/read-later-button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { publicArticleBySlugQueryOptions } from "@/lib/articles";
+import { SITE_URL, seoHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/articles/$articleId")({
 	component: RouteComponent,
@@ -22,9 +23,41 @@ export const Route = createFileRoute("/articles/$articleId")({
 
 		return { article };
 	},
-	head: ({ match }) => ({
-		meta: [{ title: `${match.context.article.title} — Letter` }],
-	}),
+	head: ({ match }) => {
+		const { article } = match.context;
+		const path = `/articles/${match.params.articleId}`;
+
+		const jsonLd = {
+			"@context": "https://schema.org",
+			"@type": "Article",
+			headline: article.title,
+			description: article.description ?? undefined,
+			image: article.coverImage ?? undefined,
+			datePublished: article.createdAt,
+			dateModified: article.updatedAt,
+			author: {
+				"@type": "Person",
+				name: article.author.name,
+			},
+			mainEntityOfPage: new URL(path, SITE_URL).toString(),
+		};
+
+		return {
+			...seoHead({
+				title: `${article.title} — Letter`,
+				description: article.description,
+				path,
+				image: article.coverImage,
+				type: "article",
+			}),
+			scripts: [
+				{
+					type: "application/ld+json",
+					children: JSON.stringify(jsonLd),
+				},
+			],
+		};
+	},
 });
 
 function ArticlePending() {

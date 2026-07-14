@@ -5,6 +5,7 @@ import { CategoryHeader } from "@/components/category-header";
 import { Skeleton } from "@/components/ui/skeleton";
 import { publicArticlesByCategoryQueryOptions } from "@/lib/articles";
 import { CATEGORIES } from "@/lib/categories";
+import { seoHead } from "@/lib/seo";
 
 const SKELETON_CARDS = Array.from({ length: 6 }, (_, index) => index);
 
@@ -28,9 +29,12 @@ export const Route = createFileRoute("/$category")({
 
 		return { category, articles };
 	},
-	head: ({ match }) => ({
-		meta: [{ title: `${match.context.category} — Letter` }],
-	}),
+	head: ({ match }) =>
+		seoHead({
+			title: `${match.context.category} — Letter`,
+			description: `Stories, ideas, and perspectives from the ${match.context.category.toLowerCase()} community.`,
+			path: `/${match.context.category.toLowerCase()}`,
+		}),
 });
 
 function CategoryPending() {
