@@ -1,23 +1,32 @@
 import { Link } from "@tanstack/react-router";
 import type { JSONContent } from "@tiptap/react";
 import { CategoryBadge } from "@/components/category-badge";
+import { ReadLaterButton } from "@/components/read-later-button";
 import { Avatar } from "@/components/ui/avatar";
 import { Skeleton } from "@/components/ui/skeleton";
 import type { PublicArticle } from "@/lib/articles";
+import { cn } from "@/lib/utils/classnames";
 import { formatDate } from "@/lib/utils/format-date";
 import { getReadTime } from "@/lib/utils/read-time";
 
 interface ArticleCardProps {
 	article: PublicArticle;
+	// aligns the card sections with its siblings; requires a grid parent with row-gap
+	subgrid?: boolean;
 }
 
-const ArticleCard = ({ article }: ArticleCardProps) => {
+const ArticleCard = ({ article, subgrid = false }: ArticleCardProps) => {
 	const readTime = article.content
 		? getReadTime(article.content as JSONContent)
 		: null;
 
 	return (
-		<article className="group animate-fade-in-up flex flex-col gap-3">
+		<article
+			className={cn(
+				"group animate-fade-in-up gap-3",
+				subgrid ? "grid row-span-5 grid-rows-subgrid" : "flex flex-col",
+			)}
+		>
 			{article.coverImage && (
 				<Link
 					to="/articles/$articleId"
@@ -32,46 +41,42 @@ const ArticleCard = ({ article }: ArticleCardProps) => {
 					/>
 				</Link>
 			)}
-			<div className="flex flex-col gap-3">
-				<div className="flex items-center gap-3">
-					<CategoryBadge
-						category={article.category ?? "Uncategorized"}
-						linked
-					/>
-					<span className="text-xs text-muted-foreground mt-1">
-						{formatDate(article.createdAt)}
-					</span>
-				</div>
-				<Link
-					to="/articles/$articleId"
-					params={{ articleId: article.slug as string }}
-					className="block"
+			<div className="flex items-center gap-3">
+				<CategoryBadge category={article.category ?? "Uncategorized"} linked />
+				<span className="text-xs text-muted-foreground mt-1">
+					{formatDate(article.createdAt)}
+				</span>
+			</div>
+			<Link
+				to="/articles/$articleId"
+				params={{ articleId: article.slug as string }}
+				className="block"
+			>
+				<h3 className="editorial-heading text-2xl leading-snug transition-colors duration-300 group-hover:text-muted-foreground">
+					{article.title}
+				</h3>
+			</Link>
+			<p className="line-clamp-2 min-h-10 text-sm text-muted-foreground">
+				{article.description}
+			</p>
+			<div className="flex items-center gap-2 pt-1">
+				<Avatar
+					size="xs"
+					className="transition-transform duration-300 group-hover:scale-110"
 				>
-					<h3 className="editorial-heading text-2xl leading-snug transition-colors duration-300 group-hover:text-muted-foreground">
-						{article.title}
-					</h3>
-				</Link>
-				<p className="line-clamp-2 min-h-10 text-sm text-muted-foreground">
-					{article.description}
-				</p>
-				<div className="flex items-center gap-2 pt-1">
-					<Avatar
-						size="xs"
-						className="transition-transform duration-300 group-hover:scale-110"
-					>
-						{article.author.image ? (
-							<Avatar.Image src={article.author.image} />
-						) : (
-							<Avatar.Fallback>{article.author.name}</Avatar.Fallback>
-						)}
-					</Avatar>
-					<span className="text-sm font-medium">{article.author.name}</span>
-					{readTime !== null && (
-						<span className="text-sm text-muted-foreground">
-							· {readTime} min read
-						</span>
+					{article.author.image ? (
+						<Avatar.Image src={article.author.image} />
+					) : (
+						<Avatar.Fallback>{article.author.name}</Avatar.Fallback>
 					)}
-				</div>
+				</Avatar>
+				<span className="text-sm font-medium">{article.author.name}</span>
+				{readTime !== null && (
+					<span className="text-sm text-muted-foreground">
+						· {readTime} min read
+					</span>
+				)}
+				<ReadLaterButton articleId={article.id} iconOnly />
 			</div>
 		</article>
 	);

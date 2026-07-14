@@ -1,15 +1,26 @@
-import { LayoutIcon, SignOutIcon } from "@phosphor-icons/react";
+import {
+	BookmarkSimpleIcon,
+	LayoutIcon,
+	SignOutIcon,
+} from "@phosphor-icons/react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
 import { Avatar } from "@/components/ui/avatar";
 import { DropdownMenu } from "@/components/ui/dropdown";
 import { authClient } from "@/lib/auth-client";
 import { sessionQueryOptions } from "@/lib/middleware";
+import { readLaterIdsQueryOptions } from "@/lib/read-later";
 
 function UserMenu() {
 	const navigate = useNavigate();
 	const queryClient = useQueryClient();
 	const { data: session } = useQuery(sessionQueryOptions());
+	const { data: readLaterIds } = useQuery({
+		...readLaterIdsQueryOptions(),
+		enabled: !!session,
+	});
+
+	const hasUnread = (readLaterIds?.length ?? 0) > 0;
 
 	const handleSignOut = async () => {
 		await authClient.signOut();
@@ -45,6 +56,13 @@ function UserMenu() {
 				<DropdownMenu.Item onSelect={() => navigate({ to: "/dashboard" })}>
 					<LayoutIcon />
 					Dashboard
+				</DropdownMenu.Item>
+				<DropdownMenu.Item onSelect={() => navigate({ to: "/read-later" })}>
+					<BookmarkSimpleIcon />
+					Read later
+					{hasUnread && (
+						<span className="ml-auto size-1.5 rounded-full bg-primary" />
+					)}
 				</DropdownMenu.Item>
 				<DropdownMenu.Separator />
 				<DropdownMenu.Item

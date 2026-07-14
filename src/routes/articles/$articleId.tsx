@@ -2,6 +2,7 @@ import { ArrowLeftIcon } from "@phosphor-icons/react";
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import type { JSONContent } from "@tiptap/react";
 import { ArticleContent } from "@/components/article-content";
+import { ReadLaterButton } from "@/components/read-later-button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { publicArticleBySlugQueryOptions } from "@/lib/articles";
 
@@ -77,6 +78,7 @@ function RouteComponent() {
 					authorName={article.author.name}
 					authorImage={article.author.image}
 					date={article.createdAt}
+					actions={<ReadLaterButton articleId={article.id} />}
 				/>
 			</article>
 		</main>

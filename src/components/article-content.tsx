@@ -27,6 +27,7 @@ interface ArticleContentProps {
 	authorImage?: string | null;
 	date: Date | string;
 	categoryLinked?: boolean;
+	actions?: React.ReactNode;
 }
 
 const ArticleContent = ({
@@ -38,6 +39,7 @@ const ArticleContent = ({
 	authorImage,
 	date,
 	categoryLinked = true,
+	actions,
 }: ArticleContentProps) => {
 	const readTime = content ? getReadTime(content) : null;
 
@@ -75,6 +77,7 @@ const ArticleContent = ({
 						)}
 					</div>
 				</div>
+				{actions}
 			</div>
 
 			{coverImage && (

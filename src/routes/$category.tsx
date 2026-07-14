@@ -72,8 +72,8 @@ function RouteComponent() {
 				) : (
 					<ul className="grid grid-cols-1 gap-x-8 gap-y-6 lg:gap-y-12  sm:grid-cols-2 lg:grid-cols-3">
 						{articles.map((article) => (
-							<li key={article.id}>
-								<ArticleCard article={article} />
+							<li key={article.id} className="contents">
+								<ArticleCard article={article} subgrid />
 							</li>
 						))}
 					</ul>

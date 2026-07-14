@@ -1,5 +1,5 @@
 import { relations } from "drizzle-orm";
-import { pgTable, text, timestamp, boolean, jsonb, index } from "drizzle-orm/pg-core";
+import { pgTable, text, timestamp, boolean, jsonb, index, primaryKey } from "drizzle-orm/pg-core";
 
 export type JsonValue =
   | string
@@ -112,10 +112,39 @@ export const articles = pgTable(
   (table) => [index("articles_authorId_idx").on(table.authorId)],
 );
 
+export const readLater = pgTable(
+  "read_later",
+  {
+    userId: text("user_id")
+      .notNull()
+      .references(() => user.id, { onDelete: "cascade" }),
+    articleId: text("article_id")
+      .notNull()
+      .references(() => articles.id, { onDelete: "cascade" }),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+  },
+  (table) => [
+    primaryKey({ columns: [table.userId, table.articleId] }),
+    index("read_later_userId_idx").on(table.userId),
+  ],
+);
+
 export const userRelations = relations(user, ({ many }) => ({
   sessions: many(session),
   accounts: many(account),
   articles: many(articles),
+  readLater: many(readLater),
+}));
+
+export const readLaterRelations = relations(readLater, ({ one }) => ({
+  user: one(user, {
+    fields: [readLater.userId],
+    references: [user.id],
+  }),
+  article: one(articles, {
+    fields: [readLater.articleId],
+    references: [articles.id],
+  }),
 }));
 
 export const articlesRelations = relations(articles, ({ one }) => ({
@@ -145,7 +174,9 @@ export const schema = {
   account,
   verification,
   articles,
+  readLater,
   userRelations,
+  readLaterRelations,
   articlesRelations,
   sessionRelations,
   accountRelations,

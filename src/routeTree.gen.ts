@@ -18,6 +18,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as ArticlesArticleIdRouteImport } from './routes/articles/$articleId'
 import { Route as authorizedadminRouteRouteImport } from './routes/(authorized)/(admin)/route'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
+import { Route as authorizeduserReadLaterRouteImport } from './routes/(authorized)/(user)/read-later'
 import { Route as authorizeduserDashboardRouteImport } from './routes/(authorized)/(user)/dashboard'
 import { Route as authorizedadminArticleEditorRouteRouteImport } from './routes/(authorized)/(admin)/article-editor/route'
 import { Route as authorizedadminArticleEditorIndexRouteImport } from './routes/(authorized)/(admin)/article-editor/index'
@@ -66,6 +67,11 @@ const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   path: '/api/auth/$',
   getParentRoute: () => rootRouteImport,
 } as any)
+const authorizeduserReadLaterRoute = authorizeduserReadLaterRouteImport.update({
+  id: '/(user)/read-later',
+  path: '/read-later',
+  getParentRoute: () => authorizedRouteRoute,
+} as any)
 const authorizeduserDashboardRoute = authorizeduserDashboardRouteImport.update({
   id: '/(user)/dashboard',
   path: '/dashboard',
@@ -99,6 +105,7 @@ export interface FileRoutesByFullPath {
   '/articles/$articleId': typeof ArticlesArticleIdRoute
   '/article-editor': typeof authorizedadminArticleEditorRouteRouteWithChildren
   '/dashboard': typeof authorizeduserDashboardRoute
+  '/read-later': typeof authorizeduserReadLaterRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/article-editor/$slug': typeof authorizedadminArticleEditorSlugRoute
   '/article-editor/': typeof authorizedadminArticleEditorIndexRoute
@@ -111,6 +118,7 @@ export interface FileRoutesByTo {
   '/unauthorized': typeof UnauthorizedRoute
   '/articles/$articleId': typeof ArticlesArticleIdRoute
   '/dashboard': typeof authorizeduserDashboardRoute
+  '/read-later': typeof authorizeduserReadLaterRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/article-editor/$slug': typeof authorizedadminArticleEditorSlugRoute
   '/article-editor': typeof authorizedadminArticleEditorIndexRoute
@@ -127,6 +135,7 @@ export interface FileRoutesById {
   '/articles/$articleId': typeof ArticlesArticleIdRoute
   '/(authorized)/(admin)/article-editor': typeof authorizedadminArticleEditorRouteRouteWithChildren
   '/(authorized)/(user)/dashboard': typeof authorizeduserDashboardRoute
+  '/(authorized)/(user)/read-later': typeof authorizeduserReadLaterRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/(authorized)/(admin)/article-editor/$slug': typeof authorizedadminArticleEditorSlugRoute
   '/(authorized)/(admin)/article-editor/': typeof authorizedadminArticleEditorIndexRoute
@@ -142,6 +151,7 @@ export interface FileRouteTypes {
     | '/articles/$articleId'
     | '/article-editor'
     | '/dashboard'
+    | '/read-later'
     | '/api/auth/$'
     | '/article-editor/$slug'
     | '/article-editor/'
@@ -154,6 +164,7 @@ export interface FileRouteTypes {
     | '/unauthorized'
     | '/articles/$articleId'
     | '/dashboard'
+    | '/read-later'
     | '/api/auth/$'
     | '/article-editor/$slug'
     | '/article-editor'
@@ -169,6 +180,7 @@ export interface FileRouteTypes {
     | '/articles/$articleId'
     | '/(authorized)/(admin)/article-editor'
     | '/(authorized)/(user)/dashboard'
+    | '/(authorized)/(user)/read-later'
     | '/api/auth/$'
     | '/(authorized)/(admin)/article-editor/$slug'
     | '/(authorized)/(admin)/article-editor/'
@@ -250,6 +262,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiAuthSplatRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/(authorized)/(user)/read-later': {
+      id: '/(authorized)/(user)/read-later'
+      path: '/read-later'
+      fullPath: '/read-later'
+      preLoaderRoute: typeof authorizeduserReadLaterRouteImport
+      parentRoute: typeof authorizedRouteRoute
+    }
     '/(authorized)/(user)/dashboard': {
       id: '/(authorized)/(user)/dashboard'
       path: '/dashboard'
@@ -314,11 +333,13 @@ const authorizedadminRouteRouteWithChildren =
 interface authorizedRouteRouteChildren {
   authorizedadminRouteRoute: typeof authorizedadminRouteRouteWithChildren
   authorizeduserDashboardRoute: typeof authorizeduserDashboardRoute
+  authorizeduserReadLaterRoute: typeof authorizeduserReadLaterRoute
 }
 
 const authorizedRouteRouteChildren: authorizedRouteRouteChildren = {
   authorizedadminRouteRoute: authorizedadminRouteRouteWithChildren,
   authorizeduserDashboardRoute: authorizeduserDashboardRoute,
+  authorizeduserReadLaterRoute: authorizeduserReadLaterRoute,
 }
 
 const authorizedRouteRouteWithChildren = authorizedRouteRoute._addFileChildren(

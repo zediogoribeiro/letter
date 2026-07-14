@@ -2,6 +2,7 @@ import { ArrowRightIcon } from "@phosphor-icons/react";
 import { Link } from "@tanstack/react-router";
 import type { JSONContent } from "@tiptap/react";
 import { CategoryBadge } from "@/components/category-badge";
+import { ReadLaterButton } from "@/components/read-later-button";
 import { Avatar } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import type { PublicArticle } from "@/lib/articles";
@@ -45,7 +46,7 @@ export const HomeHero = ({ article }: HomeHeroProps) => {
 								{article.description}
 							</p>
 						)}
-						<div className="animate-fade-in-up delay-450 mt-6">
+						<div className="animate-fade-in-up delay-450 mt-6 flex items-center gap-2">
 							<Button asChild className="group gap-2">
 								<Link
 									to="/articles/$articleId"
@@ -55,6 +56,7 @@ export const HomeHero = ({ article }: HomeHeroProps) => {
 									<ArrowRightIcon className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
 								</Link>
 							</Button>
+							<ReadLaterButton articleId={article.id} />
 						</div>
 						<div className="animate-fade-in-up delay-600 mt-8 flex items-center gap-3">
 							<Avatar size="sm">
