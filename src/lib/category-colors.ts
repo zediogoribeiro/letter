@@ -41,12 +41,13 @@ export const CATEGORY_HOVER_SURFACE_STYLES: Record<Category, string> = {
 
 // Radix Select.Item moves DOM focus to the highlighted item (pointer or
 // keyboard), so `focus:` is what actually drives the highlight state here.
+// The base item style fills `focus:bg-accent`; override it to transparent so
+// only the category text color shows through.
 export const CATEGORY_SELECT_ITEM_STYLES: Record<Category, string> = {
-	Marketing:
-		"focus:bg-category-marketing focus:text-category-marketing-foreground",
-	Design: "focus:bg-category-design focus:text-category-design-foreground",
+	Marketing: "focus:bg-transparent focus:text-category-marketing-foreground",
+	Design: "focus:bg-transparent focus:text-category-design-foreground",
 	Engineering:
-		"focus:bg-category-engineering focus:text-category-engineering-foreground",
-	Product: "focus:bg-category-product focus:text-category-product-foreground",
-	Culture: "focus:bg-category-culture focus:text-category-culture-foreground",
+		"focus:bg-transparent focus:text-category-engineering-foreground",
+	Product: "focus:bg-transparent focus:text-category-product-foreground",
+	Culture: "focus:bg-transparent focus:text-category-culture-foreground",
 };

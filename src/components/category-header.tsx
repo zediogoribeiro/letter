@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils/classnames";
 export const CategoryHeader = ({ category }: { category: string }) => {
 	return (
 		<section className="border-b border-border bg-paper/30">
-			<div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
+			<div className="mx-auto w-full max-w-7xl px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
 				<Link
 					to="/"
 					className="text-sm text-muted-foreground hover:text-foreground"

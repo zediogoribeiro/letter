@@ -4,6 +4,7 @@ import { generateHTML, type JSONContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { CategoryBadge } from "@/components/category-badge";
 import { Avatar } from "@/components/ui/avatar";
+import { getReadTime } from "@/lib/utils/read-time";
 
 const CONTENT_EXTENSIONS = [
 	StarterKit.configure({
@@ -16,23 +17,6 @@ const CONTENT_EXTENSIONS = [
 		alignments: ["left", "center"],
 	}),
 ];
-
-const WORDS_PER_MINUTE = 200;
-
-const extractText = (node: JSONContent): string => {
-	const ownText = node.text ?? "";
-	const childText = node.content?.map(extractText).join(" ") ?? "";
-	return `${ownText} ${childText}`;
-};
-
-const getReadTime = (content: JSONContent) => {
-	const wordCount = extractText(content)
-		.trim()
-		.split(/\s+/)
-		.filter(Boolean).length;
-
-	return Math.max(1, Math.round(wordCount / WORDS_PER_MINUTE));
-};
 
 interface ArticleContentProps {
 	title: string;

@@ -138,6 +138,33 @@ export const publicArticleBySlugQueryOptions = (slug: string) =>
 		queryFn: () => getPublicArticleBySlugFn({ data: { slug } }),
 	});
 
+const getPublicArticlesByCategorySchema = z.object({ category: z.string() });
+
+export const getPublicArticlesByCategoryFn = createServerFn({
+	method: "GET",
+})
+	.validator(getPublicArticlesByCategorySchema)
+	.handler(async ({ data }) => {
+		return db.query.articles.findMany({
+			where: and(
+				eq(articles.category, data.category),
+				eq(articles.status, "published"),
+			),
+			with: { author: true },
+			orderBy: (articles, { desc }) => [desc(articles.createdAt)],
+		});
+	});
+
+export const publicArticlesByCategoryQueryOptions = (category: string) =>
+	queryOptions({
+		queryKey: ["articles", "public-category", category],
+		queryFn: () => getPublicArticlesByCategoryFn({ data: { category } }),
+	});
+
+export type PublicArticle = Awaited<
+	ReturnType<typeof getPublicArticlesByCategoryFn>
+>[number];
+
 export const listArticlesFn = createServerFn({ method: "GET" }).handler(
 	async () => {
 		await requireAdmin();

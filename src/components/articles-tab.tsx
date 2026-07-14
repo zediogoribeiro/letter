@@ -19,13 +19,7 @@ import {
 	deleteArticleFn,
 	updateArticleStatusFn,
 } from "@/lib/articles";
-
-const formatDate = (date: string | Date) =>
-	new Date(date).toLocaleDateString(undefined, {
-		year: "numeric",
-		month: "short",
-		day: "numeric",
-	});
+import { formatDate } from "@/lib/utils/format-date";
 
 export const ArticlesTab = () => {
 	const navigate = useNavigate();
