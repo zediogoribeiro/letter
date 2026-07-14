@@ -1,25 +1,24 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute } from "@tanstack/react-router";
+import { HomeHero } from "@/components/home-hero";
+import { latestPublicArticleQueryOptions } from "@/lib/articles";
 
-import { useTheme } from '../hooks/use-theme'
+export const Route = createFileRoute("/")({
+	component: Home,
+	beforeLoad: async ({ context }) => {
+		const latestArticle = await context.queryClient.ensureQueryData(
+			latestPublicArticleQueryOptions(),
+		);
 
-export const Route = createFileRoute('/')({ component: Home })
+		return { latestArticle };
+	},
+});
 
 function Home() {
-  const { theme, toggleTheme } = useTheme()
+	const { latestArticle } = Route.useRouteContext();
 
-  return (
-    <div className="p-8">
-      <button
-        type="button"
-        onClick={toggleTheme}
-        className="rounded-md border px-3 py-1 text-sm mb-10"
-      >
-        Toggle theme (current: {theme})
-      </button>
-      <h1 className="text-4xl font-bold ">Welcome to TanStack Start</h1>
-      <p className="mt-4 text-lg ">
-        Edit <code>src/routes/index.tsx</code> to get started.
-      </p>
-    </div>
-  )
+	return (
+		<div className="flex min-h-screen flex-col bg-background">
+			{latestArticle && <HomeHero article={latestArticle} />}
+		</div>
+	);
 }

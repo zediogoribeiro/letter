@@ -185,12 +185,29 @@
 	}
 }
 
+@keyframes zoom-fade-in {
+	from {
+		opacity: 0;
+		transform: scale(1.04);
+	}
+	to {
+		opacity: 1;
+		transform: scale(1);
+	}
+}
+
 @utility animate-fade-in-up {
 	animation: fade-in-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 @utility animate-fade-in {
 	animation: fade-in 0.5s ease-out both;
+}
+
+/* Large imagery settling into place; put it on the masked container,
+   not the <img>, so it doesn't pin transform under a hover scale. */
+@utility animate-zoom-fade-in {
+	animation: zoom-fade-in 1s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 @utility animate-fade-out {
@@ -213,17 +230,10 @@
 	animation: bounce-letter 2.8s ease-in-out infinite;
 }
 
-@utility delay-75 {
-	animation-delay: 75ms;
-}
-@utility delay-150 {
-	animation-delay: 150ms;
-}
-@utility delay-300 {
-	animation-delay: 300ms;
-}
-@utility delay-500 {
-	animation-delay: 500ms;
+/* Overrides Tailwind's built-in delay-* (transition-delay): in this project
+   delays stagger keyframe entrances, so delay-<n> means animation-delay. */
+@utility delay-* {
+	animation-delay: calc(--value(integer) * 1ms);
 }
 
 @utility nav-underline {
@@ -246,5 +256,28 @@
 	&[data-status="active"]::after {
 		transform: scaleX(1);
 		transform-origin: left;
+	}
+}
+
+/*
+ * Unlayered on purpose (same trick as the Sonner rule in app.css) so these
+ * beat the utility layer above. Spatial entrances become plain fades and
+ * stagger delays collapse so content appears promptly — motion is replaced
+ * with something calmer, not just switched off.
+ */
+@media (prefers-reduced-motion: reduce) {
+	.animate-fade-in-up,
+	.animate-zoom-fade-in,
+	.animate-slide-in-from-right {
+		animation-name: fade-in;
+		animation-delay: 0ms;
+	}
+
+	.animate-slide-out-to-right {
+		animation-name: fade-out;
+	}
+
+	.animate-bounce-letter {
+		animation: none;
 	}
 }

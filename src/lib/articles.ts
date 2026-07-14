@@ -161,6 +161,24 @@ export const publicArticlesByCategoryQueryOptions = (category: string) =>
 		queryFn: () => getPublicArticlesByCategoryFn({ data: { category } }),
 	});
 
+export const getLatestPublicArticleFn = createServerFn({
+	method: "GET",
+}).handler(async () => {
+	const article = await db.query.articles.findFirst({
+		where: eq(articles.status, "published"),
+		with: { author: true },
+		orderBy: (articles, { desc }) => [desc(articles.createdAt)],
+	});
+
+	return article ?? null;
+});
+
+export const latestPublicArticleQueryOptions = () =>
+	queryOptions({
+		queryKey: ["articles", "public-latest"],
+		queryFn: () => getLatestPublicArticleFn(),
+	});
+
 export type PublicArticle = Awaited<
 	ReturnType<typeof getPublicArticlesByCategoryFn>
 >[number];
