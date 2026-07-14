@@ -230,9 +230,7 @@
 	animation: bounce-letter 2.8s ease-in-out infinite;
 }
 
-/* Overrides Tailwind's built-in delay-* (transition-delay): in this project
-   delays stagger keyframe entrances, so delay-<n> means animation-delay. */
-@utility delay-* {
+@utility animation-delay-* {
 	animation-delay: calc(--value(integer) * 1ms);
 }
 

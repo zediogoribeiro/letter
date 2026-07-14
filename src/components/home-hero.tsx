@@ -37,16 +37,16 @@ export const HomeHero = ({ article }: HomeHeroProps) => {
 							params={{ articleId: article.slug as string }}
 							className="group"
 						>
-							<h1 className="editorial-heading animate-fade-in-up delay-75 text-4xl leading-[1.05] transition-colors duration-300 group-hover:text-muted-foreground sm:text-5xl lg:text-6xl">
+							<h1 className="editorial-heading animate-fade-in-up animation-delay-75 text-4xl leading-[1.05] transition-colors duration-300 group-hover:text-muted-foreground sm:text-5xl lg:text-6xl">
 								{article.title}
 							</h1>
 						</Link>
 						{article.description && (
-							<p className="animate-fade-in-up delay-300 mt-4 text-lg text-muted-foreground">
+							<p className="animate-fade-in-up animation-delay-300 mt-4 text-lg text-muted-foreground">
 								{article.description}
 							</p>
 						)}
-						<div className="animate-fade-in-up delay-450 mt-6 flex items-center gap-2">
+						<div className="animate-fade-in-up animation-delay-450 mt-6 flex items-center gap-2">
 							<Button asChild className="group gap-2">
 								<Link
 									to="/articles/$articleId"
@@ -58,7 +58,7 @@ export const HomeHero = ({ article }: HomeHeroProps) => {
 							</Button>
 							<ReadLaterButton articleId={article.id} />
 						</div>
-						<div className="animate-fade-in-up delay-600 mt-8 flex items-center gap-3">
+						<div className="animate-fade-in-up animation-delay-600 mt-8 flex items-center gap-3">
 							<Avatar size="sm">
 								{article.author.image ? (
 									<Avatar.Image src={article.author.image} />

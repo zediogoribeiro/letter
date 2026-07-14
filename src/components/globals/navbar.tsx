@@ -98,10 +98,10 @@ export function NavBar() {
 							</Button>
 						</Drawer.Trigger>
 						<Drawer.Content>
-							<Drawer.Header className="sr-only">
-								<Drawer.Title>Menu</Drawer.Title>
+							<Drawer.Header>
+								<Drawer.Title className="px-3">Categorys Menu</Drawer.Title>
 							</Drawer.Header>
-							<nav className="flex flex-col items-start p-4 pt-14">
+							<nav className="flex flex-col items-start p-4">
 								{CATEGORIES.map((category) => (
 									<Drawer.Close key={category} asChild>
 										<Link
