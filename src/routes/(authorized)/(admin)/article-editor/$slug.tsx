@@ -3,7 +3,7 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { ArticleForm, type ArticleValues } from "@/components/article-form";
 import { articleBySlugQueryOptions } from "@/lib/articles";
 
-export const Route = createFileRoute("/article-editor/$slug")({
+export const Route = createFileRoute("/(authorized)/(admin)/article-editor/$slug")({
 	component: RouteComponent,
 	loader: ({ context, params }) =>
 		context.queryClient.ensureQueryData(articleBySlugQueryOptions(params.slug)),

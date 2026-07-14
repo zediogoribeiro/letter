@@ -12,14 +12,16 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as UnauthorizedRouteImport } from './routes/unauthorized'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as LoginRouteImport } from './routes/login'
-import { Route as DashboardRouteImport } from './routes/dashboard'
-import { Route as ArticleEditorRouteImport } from './routes/article-editor'
 import { Route as CategoryRouteImport } from './routes/$category'
+import { Route as authorizedRouteRouteImport } from './routes/(authorized)/route'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as ArticleEditorIndexRouteImport } from './routes/article-editor.index'
 import { Route as ArticlesArticleIdRouteImport } from './routes/articles/$articleId'
-import { Route as ArticleEditorSlugRouteImport } from './routes/article-editor.$slug'
+import { Route as authorizedadminRouteRouteImport } from './routes/(authorized)/(admin)/route'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
+import { Route as authorizeduserDashboardRouteImport } from './routes/(authorized)/(user)/dashboard'
+import { Route as authorizedadminArticleEditorRouteRouteImport } from './routes/(authorized)/(admin)/article-editor/route'
+import { Route as authorizedadminArticleEditorIndexRouteImport } from './routes/(authorized)/(admin)/article-editor/index'
+import { Route as authorizedadminArticleEditorSlugRouteImport } from './routes/(authorized)/(admin)/article-editor/$slug'
 
 const UnauthorizedRoute = UnauthorizedRouteImport.update({
   id: '/unauthorized',
@@ -36,19 +38,13 @@ const LoginRoute = LoginRouteImport.update({
   path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DashboardRoute = DashboardRouteImport.update({
-  id: '/dashboard',
-  path: '/dashboard',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ArticleEditorRoute = ArticleEditorRouteImport.update({
-  id: '/article-editor',
-  path: '/article-editor',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const CategoryRoute = CategoryRouteImport.update({
   id: '/$category',
   path: '/$category',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const authorizedRouteRoute = authorizedRouteRouteImport.update({
+  id: '/(authorized)',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -56,112 +52,132 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ArticleEditorIndexRoute = ArticleEditorIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => ArticleEditorRoute,
-} as any)
 const ArticlesArticleIdRoute = ArticlesArticleIdRouteImport.update({
   id: '/articles/$articleId',
   path: '/articles/$articleId',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ArticleEditorSlugRoute = ArticleEditorSlugRouteImport.update({
-  id: '/$slug',
-  path: '/$slug',
-  getParentRoute: () => ArticleEditorRoute,
+const authorizedadminRouteRoute = authorizedadminRouteRouteImport.update({
+  id: '/(admin)',
+  getParentRoute: () => authorizedRouteRoute,
 } as any)
 const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   id: '/api/auth/$',
   path: '/api/auth/$',
   getParentRoute: () => rootRouteImport,
 } as any)
+const authorizeduserDashboardRoute = authorizeduserDashboardRouteImport.update({
+  id: '/(user)/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => authorizedRouteRoute,
+} as any)
+const authorizedadminArticleEditorRouteRoute =
+  authorizedadminArticleEditorRouteRouteImport.update({
+    id: '/article-editor',
+    path: '/article-editor',
+    getParentRoute: () => authorizedadminRouteRoute,
+  } as any)
+const authorizedadminArticleEditorIndexRoute =
+  authorizedadminArticleEditorIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => authorizedadminArticleEditorRouteRoute,
+  } as any)
+const authorizedadminArticleEditorSlugRoute =
+  authorizedadminArticleEditorSlugRouteImport.update({
+    id: '/$slug',
+    path: '/$slug',
+    getParentRoute: () => authorizedadminArticleEditorRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/$category': typeof CategoryRoute
-  '/article-editor': typeof ArticleEditorRouteWithChildren
-  '/dashboard': typeof DashboardRoute
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
   '/unauthorized': typeof UnauthorizedRoute
-  '/article-editor/$slug': typeof ArticleEditorSlugRoute
   '/articles/$articleId': typeof ArticlesArticleIdRoute
-  '/article-editor/': typeof ArticleEditorIndexRoute
+  '/article-editor': typeof authorizedadminArticleEditorRouteRouteWithChildren
+  '/dashboard': typeof authorizeduserDashboardRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/article-editor/$slug': typeof authorizedadminArticleEditorSlugRoute
+  '/article-editor/': typeof authorizedadminArticleEditorIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/$category': typeof CategoryRoute
-  '/dashboard': typeof DashboardRoute
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
   '/unauthorized': typeof UnauthorizedRoute
-  '/article-editor/$slug': typeof ArticleEditorSlugRoute
   '/articles/$articleId': typeof ArticlesArticleIdRoute
-  '/article-editor': typeof ArticleEditorIndexRoute
+  '/dashboard': typeof authorizeduserDashboardRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/article-editor/$slug': typeof authorizedadminArticleEditorSlugRoute
+  '/article-editor': typeof authorizedadminArticleEditorIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/(authorized)': typeof authorizedRouteRouteWithChildren
   '/$category': typeof CategoryRoute
-  '/article-editor': typeof ArticleEditorRouteWithChildren
-  '/dashboard': typeof DashboardRoute
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
   '/unauthorized': typeof UnauthorizedRoute
-  '/article-editor/$slug': typeof ArticleEditorSlugRoute
+  '/(authorized)/(admin)': typeof authorizedadminRouteRouteWithChildren
   '/articles/$articleId': typeof ArticlesArticleIdRoute
-  '/article-editor/': typeof ArticleEditorIndexRoute
+  '/(authorized)/(admin)/article-editor': typeof authorizedadminArticleEditorRouteRouteWithChildren
+  '/(authorized)/(user)/dashboard': typeof authorizeduserDashboardRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/(authorized)/(admin)/article-editor/$slug': typeof authorizedadminArticleEditorSlugRoute
+  '/(authorized)/(admin)/article-editor/': typeof authorizedadminArticleEditorIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/$category'
-    | '/article-editor'
-    | '/dashboard'
     | '/login'
     | '/signup'
     | '/unauthorized'
-    | '/article-editor/$slug'
     | '/articles/$articleId'
-    | '/article-editor/'
+    | '/article-editor'
+    | '/dashboard'
     | '/api/auth/$'
+    | '/article-editor/$slug'
+    | '/article-editor/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/$category'
-    | '/dashboard'
     | '/login'
     | '/signup'
     | '/unauthorized'
-    | '/article-editor/$slug'
     | '/articles/$articleId'
-    | '/article-editor'
+    | '/dashboard'
     | '/api/auth/$'
+    | '/article-editor/$slug'
+    | '/article-editor'
   id:
     | '__root__'
     | '/'
+    | '/(authorized)'
     | '/$category'
-    | '/article-editor'
-    | '/dashboard'
     | '/login'
     | '/signup'
     | '/unauthorized'
-    | '/article-editor/$slug'
+    | '/(authorized)/(admin)'
     | '/articles/$articleId'
-    | '/article-editor/'
+    | '/(authorized)/(admin)/article-editor'
+    | '/(authorized)/(user)/dashboard'
     | '/api/auth/$'
+    | '/(authorized)/(admin)/article-editor/$slug'
+    | '/(authorized)/(admin)/article-editor/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  authorizedRouteRoute: typeof authorizedRouteRouteWithChildren
   CategoryRoute: typeof CategoryRoute
-  ArticleEditorRoute: typeof ArticleEditorRouteWithChildren
-  DashboardRoute: typeof DashboardRoute
   LoginRoute: typeof LoginRoute
   SignupRoute: typeof SignupRoute
   UnauthorizedRoute: typeof UnauthorizedRoute
@@ -192,25 +208,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/dashboard': {
-      id: '/dashboard'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof DashboardRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/article-editor': {
-      id: '/article-editor'
-      path: '/article-editor'
-      fullPath: '/article-editor'
-      preLoaderRoute: typeof ArticleEditorRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/$category': {
       id: '/$category'
       path: '/$category'
       fullPath: '/$category'
       preLoaderRoute: typeof CategoryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(authorized)': {
+      id: '/(authorized)'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof authorizedRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -220,13 +229,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/article-editor/': {
-      id: '/article-editor/'
-      path: '/'
-      fullPath: '/article-editor/'
-      preLoaderRoute: typeof ArticleEditorIndexRouteImport
-      parentRoute: typeof ArticleEditorRoute
-    }
     '/articles/$articleId': {
       id: '/articles/$articleId'
       path: '/articles/$articleId'
@@ -234,12 +236,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ArticlesArticleIdRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/article-editor/$slug': {
-      id: '/article-editor/$slug'
-      path: '/$slug'
-      fullPath: '/article-editor/$slug'
-      preLoaderRoute: typeof ArticleEditorSlugRouteImport
-      parentRoute: typeof ArticleEditorRoute
+    '/(authorized)/(admin)': {
+      id: '/(authorized)/(admin)'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof authorizedadminRouteRouteImport
+      parentRoute: typeof authorizedRouteRoute
     }
     '/api/auth/$': {
       id: '/api/auth/$'
@@ -248,28 +250,85 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiAuthSplatRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/(authorized)/(user)/dashboard': {
+      id: '/(authorized)/(user)/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof authorizeduserDashboardRouteImport
+      parentRoute: typeof authorizedRouteRoute
+    }
+    '/(authorized)/(admin)/article-editor': {
+      id: '/(authorized)/(admin)/article-editor'
+      path: '/article-editor'
+      fullPath: '/article-editor'
+      preLoaderRoute: typeof authorizedadminArticleEditorRouteRouteImport
+      parentRoute: typeof authorizedadminRouteRoute
+    }
+    '/(authorized)/(admin)/article-editor/': {
+      id: '/(authorized)/(admin)/article-editor/'
+      path: '/'
+      fullPath: '/article-editor/'
+      preLoaderRoute: typeof authorizedadminArticleEditorIndexRouteImport
+      parentRoute: typeof authorizedadminArticleEditorRouteRoute
+    }
+    '/(authorized)/(admin)/article-editor/$slug': {
+      id: '/(authorized)/(admin)/article-editor/$slug'
+      path: '/$slug'
+      fullPath: '/article-editor/$slug'
+      preLoaderRoute: typeof authorizedadminArticleEditorSlugRouteImport
+      parentRoute: typeof authorizedadminArticleEditorRouteRoute
+    }
   }
 }
 
-interface ArticleEditorRouteChildren {
-  ArticleEditorSlugRoute: typeof ArticleEditorSlugRoute
-  ArticleEditorIndexRoute: typeof ArticleEditorIndexRoute
+interface authorizedadminArticleEditorRouteRouteChildren {
+  authorizedadminArticleEditorSlugRoute: typeof authorizedadminArticleEditorSlugRoute
+  authorizedadminArticleEditorIndexRoute: typeof authorizedadminArticleEditorIndexRoute
 }
 
-const ArticleEditorRouteChildren: ArticleEditorRouteChildren = {
-  ArticleEditorSlugRoute: ArticleEditorSlugRoute,
-  ArticleEditorIndexRoute: ArticleEditorIndexRoute,
+const authorizedadminArticleEditorRouteRouteChildren: authorizedadminArticleEditorRouteRouteChildren =
+  {
+    authorizedadminArticleEditorSlugRoute:
+      authorizedadminArticleEditorSlugRoute,
+    authorizedadminArticleEditorIndexRoute:
+      authorizedadminArticleEditorIndexRoute,
+  }
+
+const authorizedadminArticleEditorRouteRouteWithChildren =
+  authorizedadminArticleEditorRouteRoute._addFileChildren(
+    authorizedadminArticleEditorRouteRouteChildren,
+  )
+
+interface authorizedadminRouteRouteChildren {
+  authorizedadminArticleEditorRouteRoute: typeof authorizedadminArticleEditorRouteRouteWithChildren
 }
 
-const ArticleEditorRouteWithChildren = ArticleEditorRoute._addFileChildren(
-  ArticleEditorRouteChildren,
+const authorizedadminRouteRouteChildren: authorizedadminRouteRouteChildren = {
+  authorizedadminArticleEditorRouteRoute:
+    authorizedadminArticleEditorRouteRouteWithChildren,
+}
+
+const authorizedadminRouteRouteWithChildren =
+  authorizedadminRouteRoute._addFileChildren(authorizedadminRouteRouteChildren)
+
+interface authorizedRouteRouteChildren {
+  authorizedadminRouteRoute: typeof authorizedadminRouteRouteWithChildren
+  authorizeduserDashboardRoute: typeof authorizeduserDashboardRoute
+}
+
+const authorizedRouteRouteChildren: authorizedRouteRouteChildren = {
+  authorizedadminRouteRoute: authorizedadminRouteRouteWithChildren,
+  authorizeduserDashboardRoute: authorizeduserDashboardRoute,
+}
+
+const authorizedRouteRouteWithChildren = authorizedRouteRoute._addFileChildren(
+  authorizedRouteRouteChildren,
 )
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  authorizedRouteRoute: authorizedRouteRouteWithChildren,
   CategoryRoute: CategoryRoute,
-  ArticleEditorRoute: ArticleEditorRouteWithChildren,
-  DashboardRoute: DashboardRoute,
   LoginRoute: LoginRoute,
   SignupRoute: SignupRoute,
   UnauthorizedRoute: UnauthorizedRoute,

@@ -2,7 +2,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { ArticleForm } from "@/components/article-form";
 
-export const Route = createFileRoute("/article-editor/")({
+export const Route = createFileRoute("/(authorized)/(admin)/article-editor/")({
 	component: RouteComponent,
 });
 

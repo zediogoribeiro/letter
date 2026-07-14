@@ -36,11 +36,11 @@ function RouteComponent() {
 		await authClient.signIn.email(
 			{ email, password },
 			{
-				onSuccess: () => {
+				onSuccess: async () => {
 					toast.success("Welcome back", {
 						description: "You're signed in.",
 					});
-					queryClient.invalidateQueries({ queryKey: ["session"] });
+					await queryClient.invalidateQueries({ queryKey: ["session"] });
 					navigate({ to: "/dashboard" });
 				},
 				onError: (ctx) => {

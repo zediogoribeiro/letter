@@ -41,11 +41,11 @@ function RouteComponent() {
 				password,
 			},
 			{
-				onSuccess: () => {
+				onSuccess: async () => {
 					toast.success("Account created", {
 						description: "Welcome to Letter.",
 					});
-					queryClient.invalidateQueries({ queryKey: ["session"] });
+					await queryClient.invalidateQueries({ queryKey: ["session"] });
 					navigate({ to: "/dashboard" });
 				},
 				onError: (ctx) => {

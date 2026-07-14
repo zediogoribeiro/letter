@@ -1,17 +1,10 @@
 import { AccountTab } from "#/components/account-tab";
 import { ArticlesTab } from "#/components/articles-tab";
 import { Tabs } from "#/components/ui/tabs";
-import { createFileRoute, redirect } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/dashboard")({
+export const Route = createFileRoute("/(authorized)/(user)/dashboard")({
 	component: RouteComponent,
-	beforeLoad: async ({ context }) => {
-		if (!context.session) {
-			throw redirect({ to: "/login" });
-		}
-
-		return { session: context.session };
-	},
 });
 
 function RouteComponent() {
