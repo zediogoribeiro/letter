@@ -4,6 +4,10 @@ An editorial publishing platform — a magazine-style blog with a public reading
 
 Built with [TanStack Start](https://tanstack.com/start) (React 19, SSR), [Drizzle ORM](https://orm.drizzle.team/) on [Neon Postgres](https://neon.com/), [Better Auth](https://www.better-auth.com/), [Tiptap](https://tiptap.dev/), and [Cloudflare R2](https://developers.cloudflare.com/r2/) for image storage.
 
+## Architecture
+
+![Letter app architecture](public/imgs/letter_app_architecture.svg)
+
 ## Features
 
 ### Public
