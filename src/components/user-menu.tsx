@@ -13,7 +13,8 @@ function UserMenu() {
 
 	const handleSignOut = async () => {
 		await authClient.signOut();
-		queryClient.invalidateQueries({ queryKey: ["session"] });
+		await queryClient.invalidateQueries({ queryKey: ["session"] });
+		navigate({ to: "/" });
 	};
 
 	if (!session) return null;

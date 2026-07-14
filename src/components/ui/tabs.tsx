@@ -17,8 +17,6 @@ const useTabsContext = () => {
 	return context;
 };
 
-let tabsInstanceCounter = 0;
-
 export interface TabsProps
 	extends Omit<React.ComponentPropsWithRef<"div">, "onChange"> {
 	defaultIndex?: number;
@@ -34,8 +32,7 @@ const Tabs = ({
 	children,
 	...props
 }: TabsProps) => {
-	const reactId = useId();
-	const [tabsId] = useState(() => `${reactId}-${++tabsInstanceCounter}`);
+	const tabsId = useId();
 	const [internalIndex, setInternalIndex] = useState(defaultIndex);
 
 	const selectedIndex = selectedIndexProp ?? internalIndex;
