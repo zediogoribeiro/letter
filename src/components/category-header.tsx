@@ -1,4 +1,7 @@
 import { Link } from "@tanstack/react-router";
+import { isCategory } from "@/lib/categories";
+import { CATEGORY_TEXT_STYLES } from "@/lib/category-colors";
+import { cn } from "@/lib/utils/classnames";
 
 export const CategoryHeader = ({ category }: { category: string }) => {
 	return (
@@ -10,7 +13,12 @@ export const CategoryHeader = ({ category }: { category: string }) => {
 				>
 					← Back to feed
 				</Link>
-				<h1 className="editorial-heading mt-4 text-4xl sm:text-5xl lg:text-6xl">
+				<h1
+					className={cn(
+						"editorial-heading mt-4 text-4xl sm:text-5xl lg:text-6xl",
+						isCategory(category) && CATEGORY_TEXT_STYLES[category],
+					)}
+				>
 					{category}
 				</h1>
 				<p className="mt-4 max-w-2xl text-lg text-muted-foreground">

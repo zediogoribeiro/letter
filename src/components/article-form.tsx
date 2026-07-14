@@ -1,19 +1,24 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { EyeIcon } from "@phosphor-icons/react";
+import { useQuery } from "@tanstack/react-query";
 import type { JSONContent } from "@tiptap/react";
 import { useState } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, useForm, useWatch } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
+import { ArticleContent } from "@/components/article-content";
 import { CoverImageUpload } from "@/components/cover-image-upload";
 import RichTextEditor from "@/components/rich-text/rich-text-editor";
 import { Button } from "@/components/ui/button";
+import { Drawer } from "@/components/ui/drawer";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/text-area";
 import { saveArticleFn, updateArticleFn } from "@/lib/articles";
 import { CATEGORIES } from "@/lib/categories";
+import { CATEGORY_SELECT_ITEM_STYLES } from "@/lib/category-colors";
+import { sessionQueryOptions } from "@/lib/middleware";
 
 const articleSchema = z
 	.object({
@@ -89,6 +94,7 @@ export const ArticleForm = ({
 }: ArticleFormProps) => {
 	const [isSavingDraft, setIsSavingDraft] = useState(false);
 	const [isPublishing, setIsPublishing] = useState(false);
+	const { data: session } = useQuery(sessionQueryOptions());
 
 	const {
 		register,
@@ -100,6 +106,8 @@ export const ArticleForm = ({
 		resolver: zodResolver(articleSchema),
 		defaultValues: { status: "draft", ...defaultValues },
 	});
+
+	const preview = useWatch({ control });
 
 	const onSubmit = async (values: ArticleValues) => {
 		const payload = {
@@ -155,10 +163,34 @@ export const ArticleForm = ({
 					</p>
 				</div>
 				<div className="flex items-center gap-3">
-					<Button type="button" variant="outline" className="gap-2">
-						<EyeIcon />
-						<span>Preview</span>
-					</Button>
+					<Drawer>
+						<Drawer.Trigger asChild>
+							<Button type="button" variant="outline" className="gap-2">
+								<EyeIcon />
+								<span>Preview</span>
+							</Button>
+						</Drawer.Trigger>
+						<Drawer.Content className="max-w-2xl sm:max-w-3xl">
+							<Drawer.Header>
+								<Drawer.Title>Preview</Drawer.Title>
+								<Drawer.Description>
+									This is how your article will look to readers.
+								</Drawer.Description>
+							</Drawer.Header>
+							<div className="flex-1 overflow-y-auto px-4 pb-12 sm:px-6">
+								<ArticleContent
+									title={preview.title || "Untitled story"}
+									category={preview.category}
+									coverImage={preview.coverImage}
+									content={preview.content as JSONContent | undefined}
+									authorName={session?.user.name ?? "You"}
+									authorImage={session?.user.image}
+									date={new Date()}
+									categoryLinked={false}
+								/>
+							</div>
+						</Drawer.Content>
+					</Drawer>
 				</div>
 			</div>
 			<form
@@ -222,7 +254,11 @@ export const ArticleForm = ({
 									</Select.Trigger>
 									<Select.Content>
 										{CATEGORIES.map((category) => (
-											<Select.Item key={category} value={category}>
+											<Select.Item
+												key={category}
+												value={category}
+												className={CATEGORY_SELECT_ITEM_STYLES[category]}
+											>
 												{category}
 											</Select.Item>
 										))}

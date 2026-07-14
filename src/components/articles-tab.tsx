@@ -1,6 +1,7 @@
 import {
 	CheckCircleIcon,
 	DotsThreeVerticalIcon,
+	EyeIcon,
 	PencilSimpleIcon,
 	TrashIcon,
 	XIcon,
@@ -176,6 +177,18 @@ export const ArticlesTab = () => {
 										>
 											<PencilSimpleIcon className="h-4 w-4" />
 											Edit
+										</DropdownMenu.Item>
+										<DropdownMenu.Item
+											className="gap-2"
+											onSelect={() =>
+												navigate({
+													to: "/articles/$articleId",
+													params: { articleId: article.slug as string },
+												})
+											}
+										>
+											<EyeIcon className="h-4 w-4" />
+											View
 										</DropdownMenu.Item>
 										<DropdownMenu.Separator />
 										<DropdownMenu.Item

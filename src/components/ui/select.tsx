@@ -18,12 +18,18 @@ const SelectTrigger = ({
 }: React.ComponentPropsWithRef<typeof SelectPrimitive.Trigger>) => {
 	return (
 		<SelectPrimitive.Trigger
-			className={cn(inputStyle({ className: triggerStyle({ className }) }))}
+			className={cn(
+				inputStyle({ className: triggerStyle({ className }) }),
+				"group",
+			)}
 			{...props}
 		>
 			{children}
 			<SelectPrimitive.Icon asChild>
-				<CaretDownIcon size={14} className="shrink-0 opacity-50" />
+				<CaretDownIcon
+					size={14}
+					className="shrink-0 opacity-50 transition-transform duration-200 group-data-[state=open]:rotate-180"
+				/>
 			</SelectPrimitive.Icon>
 		</SelectPrimitive.Trigger>
 	);

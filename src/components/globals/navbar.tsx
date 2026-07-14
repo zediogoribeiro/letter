@@ -8,7 +8,12 @@ import { useQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
 import { useTheme } from "@/hooks/use-theme";
 import { CATEGORIES } from "@/lib/categories";
+import {
+	CATEGORY_HOVER_SURFACE_STYLES,
+	CATEGORY_HOVER_TEXT_STYLES,
+} from "@/lib/category-colors";
 import { sessionQueryOptions } from "@/lib/middleware";
+import { cn } from "@/lib/utils/classnames";
 import { Button, IconButton } from "../ui/button";
 import { Drawer } from "../ui/drawer";
 import { UserMenu } from "../user-menu";
@@ -32,7 +37,10 @@ export function NavBar() {
 								key={category}
 								to="/$category"
 								params={{ category: category.toLowerCase() }}
-								className="nav-underline rounded-md px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+								className={cn(
+									"nav-underline rounded-md px-3 py-2 text-sm font-medium text-muted-foreground transition-colors",
+									CATEGORY_HOVER_TEXT_STYLES[category],
+								)}
 							>
 								<span>{category}</span>
 							</Link>
@@ -99,7 +107,10 @@ export function NavBar() {
 										<Link
 											to="/$category"
 											params={{ category: category.toLowerCase() }}
-											className="nav-underline rounded-md px-3 py-3 text-lg font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+											className={cn(
+												"nav-underline rounded-md px-3 py-3 text-lg font-medium text-muted-foreground transition-colors",
+												CATEGORY_HOVER_SURFACE_STYLES[category],
+											)}
 										>
 											{category}
 										</Link>
