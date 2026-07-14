@@ -19,7 +19,6 @@ export const Route = createFileRoute("/")({
 			path: "/",
 		}),
 	beforeLoad: async ({ context }) => {
-		throw new Error("TEST: forced error to verify AppError");
 		const heroArticle = await context.queryClient.ensureQueryData(
 			heroArticleQueryOptions(),
 		);
