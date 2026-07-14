@@ -65,6 +65,14 @@ const articleSchema = z
 			});
 		}
 
+		if (!data.coverImage) {
+			ctx.addIssue({
+				code: "custom",
+				path: ["coverImage"],
+				message: "Cover image is required",
+			});
+		}
+
 		if (!data.content) {
 			ctx.addIssue({
 				code: "custom",
@@ -283,6 +291,11 @@ export const ArticleForm = ({
 							<CoverImageUpload value={field.value} onChange={field.onChange} />
 						)}
 					/>
+					{errors.coverImage && (
+						<p className="text-sm font-medium text-destructive/70">
+							{errors.coverImage.message}
+						</p>
+					)}
 				</div>
 
 				<div className="space-y-2">

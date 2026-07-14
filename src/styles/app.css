@@ -71,3 +71,46 @@
 body [data-sonner-toaster] {
 	font-family: var(--font-body);
 }
+
+/*
+ * Sonner sets its palette on [data-sonner-toaster][data-sonner-theme] (0,2,0),
+ * so this needs the extra `body` to win. Theme tokens already flip with
+ * [data-theme="dark"], so one rule covers both themes.
+ */
+body [data-sonner-toaster][data-sonner-theme] {
+	--normal-bg: var(--color-popover);
+	--normal-text: var(--color-popover-foreground);
+	--normal-border: var(--color-border);
+
+	--success-bg: var(--color-success);
+	--success-text: var(--color-success-foreground);
+	--success-border: color-mix(
+		in oklch,
+		var(--color-success-foreground) 20%,
+		var(--color-success)
+	);
+
+	--error-bg: var(--color-error);
+	--error-text: var(--color-error-foreground);
+	--error-border: color-mix(
+		in oklch,
+		var(--color-error-foreground) 20%,
+		var(--color-error)
+	);
+
+	--warning-bg: var(--color-warning);
+	--warning-text: var(--color-warning-foreground);
+	--warning-border: color-mix(
+		in oklch,
+		var(--color-warning-foreground) 20%,
+		var(--color-warning)
+	);
+
+	--info-bg: var(--color-info);
+	--info-text: var(--color-info-foreground);
+	--info-border: color-mix(
+		in oklch,
+		var(--color-info-foreground) 20%,
+		var(--color-info)
+	);
+}
