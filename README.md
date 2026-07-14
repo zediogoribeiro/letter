@@ -132,7 +132,8 @@ To get an admin account locally, sign up with an email matching `ADMIN_EMAIL_DOM
 | `npm run dev` | Dev server on port 3000 |
 | `npm run build` | Production build (Vite + Nitro) |
 | `npm run preview` | Preview the production build |
-| `npm run test` | Run tests with Vitest |
+| `npm run test` | Run tests once with Vitest |
+| `npm run test:watch` | Run tests in watch mode |
 | `npm run lint` / `npm run format` / `npm run check` | Biome lint / format / both |
 | `npm run generate-routes` | Regenerate the TanStack Router route tree |
 | `npx drizzle-kit generate` | Generate a migration from schema changes |
