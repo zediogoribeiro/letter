@@ -9,7 +9,7 @@ export const NotFound = () => {
 			<div className="editorial-heading flex text-8xl tracking-tight sm:text-9xl">
 				{DIGITS.map((digit, index) => (
 					<span
-						key={`${digit}-${index}`}
+						key={`${digit}`}
 						className="animate-bounce-letter motion-reduce:animate-none"
 						style={{ animationDelay: `${index * 150}ms` }}
 					>

@@ -1,6 +1,6 @@
 import { queryOptions } from "@tanstack/react-query";
 import { createServerFn } from "@tanstack/react-start";
-import { and, eq } from "drizzle-orm";
+import { and, eq, lt } from "drizzle-orm";
 import { z } from "zod";
 import { db } from "../../db/drizzle";
 import { articles, type JsonValue } from "../../db/schema";
@@ -177,6 +177,42 @@ export const latestPublicArticleQueryOptions = () =>
 	queryOptions({
 		queryKey: ["articles", "public-latest"],
 		queryFn: () => getLatestPublicArticleFn(),
+	});
+
+const FEED_PAGE_SIZE = 5;
+
+const getPublicArticlesSchema = z.object({
+	// createdAt of the last item on the previous page (ISO string)
+	cursor: z.string().datetime().optional(),
+});
+
+export const getPublicArticlesFn = createServerFn({ method: "GET" })
+	.validator(getPublicArticlesSchema)
+	.handler(async ({ data }) => {
+		// fetch one extra row to know whether a next page exists
+		const rows = await db.query.articles.findMany({
+			where: and(
+				eq(articles.status, "published"),
+				data.cursor ? lt(articles.createdAt, new Date(data.cursor)) : undefined,
+			),
+			with: { author: true },
+			orderBy: (articles, { desc }) => [desc(articles.createdAt)],
+			limit: FEED_PAGE_SIZE + 1,
+		});
+
+		const items = rows.slice(0, FEED_PAGE_SIZE);
+		const nextCursor =
+			rows.length > FEED_PAGE_SIZE
+				? items[items.length - 1].createdAt.toISOString()
+				: null;
+
+		return { items, nextCursor };
+	});
+
+export const latestPublicArticlesQueryOptions = () =>
+	queryOptions({
+		queryKey: ["articles", "public-feed"],
+		queryFn: () => getPublicArticlesFn({ data: {} }),
 	});
 
 export type PublicArticle = Awaited<

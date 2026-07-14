@@ -259,12 +259,6 @@
 	}
 }
 
-/*
- * Unlayered on purpose (same trick as the Sonner rule in app.css) so these
- * beat the utility layer above. Spatial entrances become plain fades and
- * stagger delays collapse so content appears promptly — motion is replaced
- * with something calmer, not just switched off.
- */
 @media (prefers-reduced-motion: reduce) {
 	.animate-fade-in-up,
 	.animate-zoom-fade-in,
@@ -280,4 +274,9 @@
 	.animate-bounce-letter {
 		animation: none;
 	}
+}
+
+@utility warm-surface {
+	background-color: var(--color-warm);
+	color: var(--color-warm-foreground);
 }
