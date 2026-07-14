@@ -99,6 +99,7 @@ export const articles = pgTable(
     coverImage: text("cover_image"),
     content: jsonb("content").$type<JsonValue>(),
     status: text("status").notNull().default("draft"),
+    featured: boolean("featured").default(false).notNull(),
     authorId: text("author_id")
       .notNull()
       .references(() => user.id, { onDelete: "cascade" }),

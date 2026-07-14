@@ -1,6 +1,6 @@
 import { queryOptions } from "@tanstack/react-query";
 import { createServerFn } from "@tanstack/react-start";
-import { and, eq, lt } from "drizzle-orm";
+import { and, eq, lt, sql } from "drizzle-orm";
 import { z } from "zod";
 import { db } from "../../db/drizzle";
 import { articles, type JsonValue } from "../../db/schema";
@@ -161,22 +161,26 @@ export const publicArticlesByCategoryQueryOptions = (category: string) =>
 		queryFn: () => getPublicArticlesByCategoryFn({ data: { category } }),
 	});
 
-export const getLatestPublicArticleFn = createServerFn({
+// the featured article wins; falls back to the most recent published one
+export const getHeroArticleFn = createServerFn({
 	method: "GET",
 }).handler(async () => {
 	const article = await db.query.articles.findFirst({
 		where: eq(articles.status, "published"),
 		with: { author: true },
-		orderBy: (articles, { desc }) => [desc(articles.createdAt)],
+		orderBy: (articles, { desc }) => [
+			desc(articles.featured),
+			desc(articles.createdAt),
+		],
 	});
 
 	return article ?? null;
 });
 
-export const latestPublicArticleQueryOptions = () =>
+export const heroArticleQueryOptions = () =>
 	queryOptions({
-		queryKey: ["articles", "public-latest"],
-		queryFn: () => getLatestPublicArticleFn(),
+		queryKey: ["articles", "public-hero"],
+		queryFn: () => getHeroArticleFn(),
 	});
 
 const FEED_PAGE_SIZE = 5;
@@ -253,6 +257,29 @@ export const updateArticleStatusFn = createServerFn({ method: "POST" })
 			.returning();
 
 		return row;
+	});
+
+const setFeaturedArticleSchema = z.object({
+	id: z.string(),
+	featured: z.boolean(),
+});
+
+export const setFeaturedArticleFn = createServerFn({ method: "POST" })
+	.validator(setFeaturedArticleSchema)
+	.handler(async ({ data }) => {
+		await requireAdmin();
+
+		if (data.featured) {
+			// single statement so at most one article is ever featured
+			await db
+				.update(articles)
+				.set({ featured: sql`${articles.id} = ${data.id}` });
+		} else {
+			await db
+				.update(articles)
+				.set({ featured: false })
+				.where(eq(articles.id, data.id));
+		}
 	});
 
 const deleteArticleSchema = z.object({ id: z.string() });

@@ -3,6 +3,7 @@ import {
 	DotsThreeVerticalIcon,
 	EyeIcon,
 	PencilSimpleIcon,
+	StarIcon,
 	TrashIcon,
 	XIcon,
 } from "@phosphor-icons/react";
@@ -17,6 +18,7 @@ import { Table } from "@/components/ui/table";
 import {
 	articlesQueryOptions,
 	deleteArticleFn,
+	setFeaturedArticleFn,
 	updateArticleStatusFn,
 } from "@/lib/articles";
 import { formatDate } from "@/lib/utils/format-date";
@@ -36,6 +38,19 @@ export const ArticlesTab = () => {
 				variables.status === "published"
 					? "Article published"
 					: "Moved to draft",
+			);
+		},
+	});
+
+	const { mutate: setFeatured } = useMutation({
+		mutationFn: (variables: { id: string; featured: boolean }) =>
+			setFeaturedArticleFn({ data: variables }),
+		onSuccess: (_, variables) => {
+			queryClient.invalidateQueries({ queryKey: ["articles"] });
+			toast.success(
+				variables.featured
+					? "Featured article updated"
+					: "Removed from featured",
 			);
 		},
 	});
@@ -101,7 +116,15 @@ export const ArticlesTab = () => {
 							}
 						>
 							<Table.Cell>
-								<div className="font-medium text-foreground">
+								<div className="flex items-center gap-2 font-medium text-foreground">
+									{article.featured && (
+										<span
+											title="Featured article"
+											className="h-1.5 w-1.5 shrink-0 rounded-full bg-primary"
+										>
+											<span className="sr-only">Featured</span>
+										</span>
+									)}
 									{article.title || (
 										<span className="text-muted-foreground">Untitled</span>
 									)}
@@ -172,18 +195,42 @@ export const ArticlesTab = () => {
 											<PencilSimpleIcon className="h-4 w-4" />
 											Edit
 										</DropdownMenu.Item>
-										<DropdownMenu.Item
-											className="gap-2"
-											onSelect={() =>
-												navigate({
-													to: "/articles/$articleId",
-													params: { articleId: article.slug as string },
-												})
-											}
-										>
-											<EyeIcon className="h-4 w-4" />
-											View
-										</DropdownMenu.Item>
+										{article.status === "published" && (
+											<DropdownMenu.Item
+												className="gap-2"
+												onSelect={() =>
+													navigate({
+														to: "/articles/$articleId",
+														params: { articleId: article.slug as string },
+													})
+												}
+											>
+												<EyeIcon className="h-4 w-4" />
+												View
+											</DropdownMenu.Item>
+										)}
+										{article.status === "published" && !article.featured && (
+											<DropdownMenu.Item
+												className="gap-2"
+												onSelect={() =>
+													setFeatured({ id: article.id, featured: true })
+												}
+											>
+												<StarIcon className="h-4 w-4" />
+												Make featured
+											</DropdownMenu.Item>
+										)}
+										{article.featured && (
+											<DropdownMenu.Item
+												className="gap-2"
+												onSelect={() =>
+													setFeatured({ id: article.id, featured: false })
+												}
+											>
+												<StarIcon className="h-4 w-4" />
+												Remove featured
+											</DropdownMenu.Item>
+										)}
 										<DropdownMenu.Separator />
 										<DropdownMenu.Item
 											className="gap-2 text-destructive focus:text-destructive"
