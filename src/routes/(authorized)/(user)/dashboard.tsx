@@ -1,7 +1,7 @@
-import { AccountTab } from "#/components/account-tab";
-import { ArticlesTab } from "#/components/articles-tab";
-import { Tabs } from "#/components/ui/tabs";
 import { createFileRoute } from "@tanstack/react-router";
+import { AccountTab } from "@/components/account-tab";
+import { ArticlesTab } from "@/components/articles-tab";
+import { Tabs } from "@/components/ui/tabs";
 
 export const Route = createFileRoute("/(authorized)/(user)/dashboard")({
 	component: RouteComponent,

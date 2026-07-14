@@ -40,6 +40,9 @@ export const ArticlesTab = () => {
 					: "Moved to draft",
 			);
 		},
+		onError: () => {
+			toast.error("Failed to update article status");
+		},
 	});
 
 	const { mutate: setFeatured } = useMutation({
@@ -53,6 +56,9 @@ export const ArticlesTab = () => {
 					: "Removed from featured",
 			);
 		},
+		onError: () => {
+			toast.error("Failed to update featured article");
+		},
 	});
 
 	const { mutate: deleteArticle } = useMutation({
@@ -61,6 +67,9 @@ export const ArticlesTab = () => {
 		onSuccess: (_, variables) => {
 			queryClient.invalidateQueries({ queryKey: ["articles"] });
 			toast.success("Article deleted", { description: variables.title });
+		},
+		onError: () => {
+			toast.error("Failed to delete article");
 		},
 	});
 

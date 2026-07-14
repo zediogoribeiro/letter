@@ -7,7 +7,8 @@ import {
 } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import { Toaster } from "sonner";
-import { Footer } from "#/components/globals/footer";
+import { AppError } from "@/components/app-error";
+import { Footer } from "@/components/globals/footer";
 import { NavBar } from "@/components/globals/navbar";
 import { NotFound } from "@/components/not-found";
 import { useTheme } from "@/hooks/use-theme";
@@ -82,6 +83,7 @@ export const Route = createRootRouteWithContext<{
 		],
 	}),
 	notFoundComponent: NotFound,
+	errorComponent: AppError,
 	shellComponent: RootDocument,
 });
 

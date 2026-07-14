@@ -128,15 +128,21 @@ export const ArticleForm = ({
 			content: values.content,
 		};
 
-		const article = articleId
-			? await updateArticleFn({ data: { id: articleId, ...payload } })
-			: await saveArticleFn({ data: payload });
+		try {
+			const article = articleId
+				? await updateArticleFn({ data: { id: articleId, ...payload } })
+				: await saveArticleFn({ data: payload });
 
-		toast.success(
-			values.status === "draft" ? "Draft saved" : "Article published",
-			{ description: values.title },
-		);
-		onSaved?.(article);
+			toast.success(
+				values.status === "draft" ? "Draft saved" : "Article published",
+				{ description: values.title },
+			);
+			onSaved?.(article);
+		} catch (error) {
+			toast.error("Failed to save article", {
+				description: error instanceof Error ? error.message : undefined,
+			});
+		}
 	};
 
 	const saveDraft = async () => {

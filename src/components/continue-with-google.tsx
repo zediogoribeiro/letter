@@ -1,7 +1,7 @@
+import { GoogleLogoIcon } from "@phosphor-icons/react";
 import { authClient } from "#/lib/auth-client";
 import { Button } from "./ui/button";
 import { Divider } from "./ui/divider";
-import { GoogleLogoIcon } from "@phosphor-icons/react";
 
 export const ContinueWithGoogle = () => {
 	const signIn = async () => {

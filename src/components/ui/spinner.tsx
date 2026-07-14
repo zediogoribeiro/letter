@@ -1,4 +1,4 @@
-import { cva } from "#/lib/utils/classnames";
+import { cva } from "@/lib/utils/classnames";
 
 type SpinnerSize = "xs" | "sm" | "md" | "lg";
 

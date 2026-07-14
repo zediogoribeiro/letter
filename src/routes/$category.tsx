@@ -1,7 +1,7 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { Button } from "#/components/ui/button";
 import { ArticleCard, ArticleCardSkeleton } from "@/components/article-card";
 import { CategoryHeader } from "@/components/category-header";
+import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { publicArticlesByCategoryQueryOptions } from "@/lib/articles";
 import { CATEGORIES } from "@/lib/categories";
