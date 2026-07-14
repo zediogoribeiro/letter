@@ -6,6 +6,9 @@ import { heroArticleQueryOptions } from "@/lib/articles";
 
 export const Route = createFileRoute("/")({
 	component: Home,
+	head: () => ({
+		meta: [{ title: "Home — Letter" }],
+	}),
 	beforeLoad: async ({ context }) => {
 		const heroArticle = await context.queryClient.ensureQueryData(
 			heroArticleQueryOptions(),

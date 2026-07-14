@@ -22,6 +22,9 @@ export const Route = createFileRoute("/articles/$articleId")({
 
 		return { article };
 	},
+	head: ({ match }) => ({
+		meta: [{ title: `${match.context.article.title} — Letter` }],
+	}),
 });
 
 function ArticlePending() {

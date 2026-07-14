@@ -20,6 +20,9 @@ type SignupValues = z.infer<typeof signupSchema>;
 
 export const Route = createFileRoute("/signup")({
 	component: RouteComponent,
+	head: () => ({
+		meta: [{ title: "Sign up — Letter" }],
+	}),
 });
 
 function RouteComponent() {

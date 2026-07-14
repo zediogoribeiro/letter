@@ -1,3 +1,8 @@
 # https://www.robotstxt.org/robotstxt.html
 User-agent: *
-Disallow:
+Allow: /
+Disallow: /dashboard
+Disallow: /read-later
+Disallow: /article-editor
+Disallow: /unauthorized
+Disallow: /api/

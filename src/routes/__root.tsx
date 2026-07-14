@@ -45,11 +45,34 @@ export const Route = createRootRouteWithContext<{
 			{
 				title: "Letter",
 			},
+			{
+				name: "description",
+				content:
+					"An editorial publishing platform — a magazine-style blog with articles on marketing, design, engineering, product, and culture.",
+			},
+			{
+				name: "theme-color",
+				content: "#faf9f5",
+				media: "(prefers-color-scheme: light)",
+			},
+			{
+				name: "theme-color",
+				content: "#242230",
+				media: "(prefers-color-scheme: dark)",
+			},
 		],
 		links: [
 			{
 				rel: "stylesheet",
 				href: appCss,
+			},
+			{
+				rel: "manifest",
+				href: "/manifest.json",
+			},
+			{
+				rel: "icon",
+				href: "/imgs/favicon.ico",
 			},
 		],
 		scripts: [

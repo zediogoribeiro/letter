@@ -28,6 +28,9 @@ export const Route = createFileRoute("/$category")({
 
 		return { category, articles };
 	},
+	head: ({ match }) => ({
+		meta: [{ title: `${match.context.category} — Letter` }],
+	}),
 });
 
 function CategoryPending() {

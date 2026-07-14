@@ -19,6 +19,9 @@ type LoginValues = z.infer<typeof loginSchema>;
 
 export const Route = createFileRoute("/login")({
 	component: RouteComponent,
+	head: () => ({
+		meta: [{ title: "Sign in — Letter" }],
+	}),
 });
 
 function RouteComponent() {

@@ -4,6 +4,9 @@ import { ArticleForm } from "@/components/article-form";
 
 export const Route = createFileRoute("/(authorized)/(admin)/article-editor/")({
 	component: RouteComponent,
+	head: () => ({
+		meta: [{ title: "New article — Letter" }],
+	}),
 });
 
 function RouteComponent() {

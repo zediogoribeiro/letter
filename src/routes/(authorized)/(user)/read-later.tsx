@@ -13,6 +13,9 @@ export const Route = createFileRoute("/(authorized)/(user)/read-later")({
 	pendingComponent: ReadLaterPending,
 	pendingMs: 0,
 	pendingMinMs: 300,
+	head: () => ({
+		meta: [{ title: "Read later — Letter" }],
+	}),
 	loader: ({ context }) =>
 		context.queryClient.ensureQueryData(readLaterArticlesQueryOptions()),
 });

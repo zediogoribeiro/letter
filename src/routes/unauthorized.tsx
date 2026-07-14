@@ -3,4 +3,7 @@ import { Unauthorized } from "@/components/unauthorized";
 
 export const Route = createFileRoute("/unauthorized")({
 	component: Unauthorized,
+	head: () => ({
+		meta: [{ title: "Unauthorized — Letter" }],
+	}),
 });

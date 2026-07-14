@@ -1,4 +1,5 @@
 import { queryOptions } from "@tanstack/react-query";
+import { notFound } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
 import { and, eq, lt, sql } from "drizzle-orm";
 import { z } from "zod";
@@ -104,7 +105,7 @@ export const getArticleBySlugFn = createServerFn({ method: "GET" })
 		});
 
 		if (!article) {
-			throw new Error("Article not found");
+			throw notFound();
 		}
 
 		return article;

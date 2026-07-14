@@ -5,6 +5,9 @@ import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/(authorized)/(user)/dashboard")({
 	component: RouteComponent,
+	head: () => ({
+		meta: [{ title: "Dashboard — Letter" }],
+	}),
 });
 
 function RouteComponent() {
