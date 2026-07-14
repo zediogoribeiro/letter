@@ -23,7 +23,7 @@ const DrawerOverlay = ({
 
 const contentStyle = cva({
 	base: [
-		"fixed inset-y-0 right-0 z-50 flex w-full max-w-sm flex-col border-l border-border bg-popover text-popover-foreground shadow-lg outline-none",
+		"fixed inset-y-0 right-0 z-50 flex w-full max-w-sm flex-col border-l border-border bg-background text-foreground shadow-lg outline-none",
 		"data-[state=closed]:animate-slide-out-to-right data-[state=open]:animate-slide-in-from-right",
 	],
 });
@@ -54,7 +54,10 @@ const DrawerContent = ({
 
 const DrawerHeader = ({ className, ...props }: React.ComponentProps<"div">) => {
 	return (
-		<div className={cn("flex flex-col gap-1 p-4 pr-10", className)} {...props} />
+		<div
+			className={cn("flex flex-col gap-1.5 p-4 pr-10 sm:p-6 sm:pr-12", className)}
+			{...props}
+		/>
 	);
 };
 
@@ -64,7 +67,7 @@ const DrawerTitle = ({
 }: React.ComponentPropsWithRef<typeof DialogPrimitive.Title>) => {
 	return (
 		<DialogPrimitive.Title
-			className={cn("text-lg font-semibold", className)}
+			className={cn("editorial-subheading text-2xl", className)}
 			{...props}
 		/>
 	);
@@ -76,7 +79,7 @@ const DrawerDescription = ({
 }: React.ComponentPropsWithRef<typeof DialogPrimitive.Description>) => {
 	return (
 		<DialogPrimitive.Description
-			className={cn("text-sm text-muted-foreground", className)}
+			className={cn("text-sm leading-relaxed text-muted-foreground", className)}
 			{...props}
 		/>
 	);
