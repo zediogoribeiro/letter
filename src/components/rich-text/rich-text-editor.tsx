@@ -6,9 +6,9 @@ import {
 	type JSONContent,
 	useEditor,
 } from "@tiptap/react";
+import { BubbleMenu } from "@tiptap/react/menus";
 import StarterKit from "@tiptap/starter-kit";
-import { useEffect, useMemo, useState } from "react";
-import { cn } from "#/lib/utils/classnames";
+import { useMemo } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { MenuBar } from "./menu-bar";
 
@@ -64,13 +64,16 @@ const RichTextEditor = ({ content, onChange }: RichTextEditorProps) => {
 
 	return (
 		<EditorContext.Provider value={providerValue}>
-			<div id="sticky-sentinel" className="relative">
+			<BubbleMenu
+				editor={editor}
+				options={{ offset: 8, shift: { padding: 8 } }}
+			>
 				<MenuBar
 					editor={editor}
-					className={cn("sticky top-16  bg-background z-10 ")}
+					className="mb-0 max-w-[92vw] shadow-md z-10 bg-background"
 				/>
-				<EditorContent editor={editor} />
-			</div>
+			</BubbleMenu>
+			<EditorContent editor={editor} />
 		</EditorContext.Provider>
 	);
 };

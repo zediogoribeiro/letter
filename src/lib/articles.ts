@@ -6,13 +6,7 @@ import { z } from "zod";
 import { db } from "../../db/drizzle";
 import { articles, type JsonValue } from "../../db/schema";
 import { requireAdmin } from "./middleware";
-
-const slugify = (title: string) =>
-	title
-		.toLowerCase()
-		.trim()
-		.replace(/[^a-z0-9]+/g, "-")
-		.replace(/^-+|-+$/g, "");
+import { slugify } from "./slug";
 
 // slug has a unique DB constraint; append -2, -3, ... until we find one that's free
 const ensureUniqueSlug = async (base: string, excludeId?: string) => {

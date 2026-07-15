@@ -2,7 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { EyeIcon } from "@phosphor-icons/react";
 import { useQuery } from "@tanstack/react-query";
 import type { JSONContent } from "@tiptap/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Controller, useForm, useWatch } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -19,6 +19,7 @@ import { saveArticleFn, updateArticleFn } from "@/lib/articles";
 import { CATEGORIES } from "@/lib/categories";
 import { CATEGORY_SELECT_ITEM_STYLES } from "@/lib/category-colors";
 import { sessionQueryOptions } from "@/lib/middleware";
+import { slugify } from "@/lib/slug";
 
 const articleSchema = z
 	.object({
@@ -102,6 +103,7 @@ export const ArticleForm = ({
 }: ArticleFormProps) => {
 	const [isSavingDraft, setIsSavingDraft] = useState(false);
 	const [isPublishing, setIsPublishing] = useState(false);
+	const [slugEdited, setSlugEdited] = useState(Boolean(defaultValues?.slug));
 	const { data: session } = useQuery(sessionQueryOptions());
 
 	const {
@@ -116,6 +118,16 @@ export const ArticleForm = ({
 	});
 
 	const preview = useWatch({ control });
+	const title = useWatch({ control, name: "title" });
+
+	useEffect(() => {
+		if (slugEdited) {
+			return;
+		}
+		setValue("slug", slugify(title ?? ""));
+	}, [title, slugEdited, setValue]);
+
+	const { onChange: onSlugChange, ...slugField } = register("slug");
 
 	const onSubmit = async (values: ArticleValues) => {
 		const payload = {
@@ -248,7 +260,11 @@ export const ArticleForm = ({
 						<Input
 							id="slug"
 							placeholder="A path to reach your article"
-							{...register("slug")}
+							{...slugField}
+							onChange={(event) => {
+								setSlugEdited(true);
+								onSlugChange(event);
+							}}
 						/>
 						{errors.slug && (
 							<p className="text-sm font-medium text-destructive/70">
