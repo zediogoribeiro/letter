@@ -51,8 +51,6 @@ const RichTextEditor = ({ content, onChange }: RichTextEditorProps) => {
 		},
 	});
 
-	const providerValue = useMemo(() => ({ editor }), [editor]);
-
 	if (!editor) {
 		return (
 			<div>
@@ -63,7 +61,7 @@ const RichTextEditor = ({ content, onChange }: RichTextEditorProps) => {
 	}
 
 	return (
-		<EditorContext.Provider value={providerValue}>
+		<>
 			<BubbleMenu
 				editor={editor}
 				options={{ offset: 8, shift: { padding: 8 } }}
@@ -74,7 +72,7 @@ const RichTextEditor = ({ content, onChange }: RichTextEditorProps) => {
 				/>
 			</BubbleMenu>
 			<EditorContent editor={editor} />
-		</EditorContext.Provider>
+		</>
 	);
 };
 
